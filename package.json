@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "start": "shx rm -rf dst && webpack --config config/webpack.config.production.js && node dst/server"
   },
   "keywords": [],
   "author": "",

@@ -9,7 +9,7 @@ import DataService from './DataService';
 const app = express();
 
 // Server port
-const HTTP_PORT = 4000;
+const HTTP_PORT = process.env.PORT || 80
 
 // Start server
 app.listen(HTTP_PORT, () => {
@@ -30,10 +30,7 @@ async function f() {
 
 // Root endpoint
 app.get('/', (req, res, next) => {
-  f()
-    .then((msg) => res.json({ msg }))
-    .catch((err) => res.status(400).json({ error: err }));
-  counter += 1;
+  res.json({ "greeting":"Hello Word" })
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
