@@ -9,14 +9,14 @@ import DataService from './DataService';
 const app = express();
 
 // Server port
-const HTTP_PORT = process.env.PORT || 80
+const HTTP_PORT = process.env.PORT || 80;
 
 // Start server
 app.listen(HTTP_PORT, () => {
   console.log(`Server running on port ${HTTP_PORT}`);
 });
 
-let counter = 0;
+const counter = 0;
 
 async function f() {
   const promise = new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ async function f() {
 
 // Root endpoint
 app.get('/', (req, res, next) => {
-  res.json({ "greeting":"Hello Word" })
+  res.json({ greeting: 'Hello Word' });
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -92,6 +92,28 @@ app.post('/api/categories', isAuth, attachCurrentUser, (req, res) => {
   // const user = req.currentUser;
 
   DataService.getCategories()
+    .then((data) => {
+      console.log('then');
+      return res.json(data).status(200);
+    })
+    .catch((err) => {
+      console.log('err');
+      return res.json(err.message).status(500);
+    });
+
+  // try {
+  //   const data = await DataService.getCategories();
+  //   console.log(`/api/categories data=${JSON.stringify(data)}`);
+
+  // } catch (err) {
+  //   return res.json(err.message).status(500);
+  // }
+});
+
+app.get('/api/users', (req, res) => {
+  // const user = req.currentUser;
+
+  DataService.getUsers()
     .then((data) => {
       console.log('then');
       return res.json(data).status(200);

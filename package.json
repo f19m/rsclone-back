@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server"
+    "start": "node dst/server",
+    "clean": "shx rm -rf dst",
+    "startDev": "npm run clean && webpack --config config/webpack.config.dev && nodemon --exec node dst/server.js",
+    "build": "npm run clean && webpack --config config/webpack.config.production.js"
   },
   "keywords": [],
   "author": "",
