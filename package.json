@@ -1,0 +1,43 @@
+{
+  "name": "expressApp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -rf dst",
+    "start": "npm run clean && webpack --config config/webpack.config.dev && nodemon --exec babel-node dst/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run clean && webpack --config config/webpack.config.production.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "argon2": "^0.27.1",
+    "babel-loader": "^8.2.2",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "core-js": "^3.8.1",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "sqlite3": "^5.0.0",
+    "shx": "^0.3.3",
+    "terser-webpack-plugin": "^5.0.3",
+    "webpack": "^5.5.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.6",
+    "webpack-build-log-plugin": "^1.0.6",
+    "webpack-node-externals": "^2.5.2"
+  }
+}
