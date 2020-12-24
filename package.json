@@ -2,9 +2,9 @@
   "name": "expressApp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "shx rm -rf dst && webpack --config config/webpack.config.production.js && node dst/server"
+    "start": "node server"
   },
   "keywords": [],
   "author": "",
