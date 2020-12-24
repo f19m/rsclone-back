@@ -1,8 +1,8 @@
-const express = required('express')
-
+const express = require('express')
 const app = express()
+
 const PORT = process.env.PORT || 80
-app.listen(HTTP_PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
