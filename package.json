@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "shx rm -rf dst && webpack --config config/webpack.config.dev && nodemon --exec node dst/server.js"
+    "start": "node index"
   },
   "keywords": [],
   "author": "",
