@@ -1,5 +1,5 @@
 {
-  "name": "expressApp",
+  "name": "f19m-rsclone-back",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -7,7 +7,9 @@
     "start": "node dst/server",
     "clean": "shx rm -rf dst",
     "startDev": "npm run clean && webpack --config config/webpack.config.dev && nodemon --exec node dst/server.js",
-    "build": "npm run clean && webpack --config config/webpack.config.production.js"
+    "build": "npm run clean && webpack --config config/webpack.config.production.js",
+    "setup-db": "node src/database/setup.js",
+    "test": "node src/test.js"
   },
   "keywords": [],
   "author": "",
@@ -24,8 +26,9 @@
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
-    "sqlite3": "^5.0.0",
+    "sequelize": "^6.3.5",
     "shx": "^0.3.3",
+    "sqlite3": "^5.0.0",
     "terser-webpack-plugin": "^5.0.3",
     "webpack": "^5.5.1",
     "webpack-cli": "^3.3.12",

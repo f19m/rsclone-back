@@ -15,7 +15,9 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
+
   rules: {
+    indent: ["error", 4],
     quotes: [
       'warn',
       'single',

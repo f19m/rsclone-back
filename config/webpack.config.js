@@ -12,7 +12,7 @@ const config = {
   name: 'server',
   target: 'node',
   entry: [
-    path.join(SRC_DIRECTORY, 'server.js'),
+    path.join(SRC_DIRECTORY, 'app.js'),
   ],
   output: {
     path: path.join(ROOT_DIRECTORY, 'dst'),
@@ -42,7 +42,7 @@ const config = {
     ],
   },
   optimization: {
-    minimize: true,
+    minimize: false,
   },
 };
 
