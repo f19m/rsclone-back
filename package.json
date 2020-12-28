@@ -9,7 +9,8 @@
     "startDev": "npm run clean && webpack --config config/webpack.config.dev && nodemon --exec node dst/server.js",
     "build": "npm run clean && webpack --config config/webpack.config.production.js",
     "setup-db": "node src/database/setup.js",
-    "test": "node src/test.js"
+    "test": "node src/test.js",
+    "watch": "webpack --config config/webpack.config.js --watch"
   },
   "keywords": [],
   "author": "",

@@ -2,6 +2,9 @@
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/User';
+import Categories from '../models/Categories';
+import UserCategories from '../models/UserCategories';
+
 import config from '../config';
 
 export default class AuthService {
@@ -18,12 +21,16 @@ export default class AuthService {
             }
 
             // get all data for user
-
+            console.log(`login: userRecord=> ${JSON.stringify(userRecord)}`);
+            const catTypes = await Categories.getAllRecords();
+            const userCatType = await UserCategories.getAllUserRecords(userRecord);
             return {
                 data: {
+                    categories: catTypes,
                     user: {
                         email: userRecord.email,
                         name: userRecord.name,
+                        UserCategories: userCatType,
                     },
                 },
                 token: this.generateToken(userRecord),

@@ -1,27 +1,14 @@
 import sequelize from '../../sequelize';
+import UserCategories from './UserCategories';
 
 const { models } = sequelize;
 
 export default class User {
-    constructor(userRec) {
-        this.name = userRec.name;
-        this.email = userRec.email.toLowerCase();
-        this.password = userRec.password;
-
-        return this;
-    }
-
     static async create(userRec) {
-        console.log(`create userRec = ${JSON.stringify(userRec)}`);
-
-        const user = new User(userRec);
-        const userForCreate = user.get();
-
-        console.log(`User create =>${JSON.stringify(userForCreate)}`);
-
         try {
-            await models.users.create(userForCreate);
-            return user.getInfo();
+            const user = await models.users.create(userRec);
+            await UserCategories.createCustomRecords(user);
+            return user;
         } catch (e) {
             console.log(e.message);
             if (e.errno === 19) {
@@ -39,7 +26,8 @@ export default class User {
             const res = await models.users.findOne({ where: { email } });
 
             if (!res) return null; // throw new Error(`User with email ${email} not found`);
-            return new User(res).get();
+
+            return res;
         } catch (e) {
             console.log('!Error');
             throw new Error(e.message);
@@ -55,7 +43,7 @@ export default class User {
         return { name: this.name, email: this.email, password: this.password };
     }
 
-    getInfo() {
+    async getInfo() {
         return { name: this.name, email: this.email };
     }
 }

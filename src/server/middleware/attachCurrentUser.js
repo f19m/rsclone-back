@@ -8,14 +8,15 @@ export default async (req, res, next) => {
     const decodedTokenData = jwt.verify(token, signature);
 
     console.log(`attachCurrentUser: decodedTokenData=${JSON.stringify(decodedTokenData)}`);
-
+    let userRecord;
     try {
-        const userRecord = await UserModel.findOne(decodedTokenData.data.email);
+        userRecord = await UserModel.findOne(decodedTokenData.data.email);
     } catch (err) {
         return res.status(401).end(err.message);
     }
 
-    req.currentUser = userRecord;
+    req.currentUser = { ...userRecord };
+    delete req.currentUser.password;
 
     if (!userRecord) {
         return res.status(401).end('User not found');

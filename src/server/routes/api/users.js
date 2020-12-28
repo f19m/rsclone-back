@@ -46,7 +46,7 @@ router.post('/registration', (req, res, next) => {
 
 router.post('/users', auth.required, attachCurrentUser, (req, res, next) => {
     User.getAll()
-        .then((data) => res.json(JSON.stringify(data)))
+        .then((data) => res.json(data))
         .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
 });
 
