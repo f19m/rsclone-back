@@ -1,6 +1,6 @@
 import sequelize from './sequelize';
 import db from './database/setup';
-import server from './server/';
+import server from './server/index';
 import config from './server/config';
 
 const HTTP_PORT = config.port;

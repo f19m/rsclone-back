@@ -9,7 +9,11 @@ export default async (req, res, next) => {
 
     console.log(`attachCurrentUser: decodedTokenData=${JSON.stringify(decodedTokenData)}`);
 
-    const userRecord = await UserModel.findOne(decodedTokenData.data.email);
+    try {
+        const userRecord = await UserModel.findOne(decodedTokenData.data.email);
+    } catch (err) {
+        return res.status(401).end(err.message);
+    }
 
     req.currentUser = userRecord;
 

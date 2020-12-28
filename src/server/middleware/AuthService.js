@@ -9,7 +9,7 @@ export default class AuthService {
         const userRecord = await UserModel.findOne(email);
 
         if (!userRecord) {
-            throw new Error('User not found');
+            throw new Error('User or password incorrect');
         } else {
             const correctPassword = await argon2.verify(userRecord.password, password);
 

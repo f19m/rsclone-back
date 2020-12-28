@@ -38,7 +38,7 @@ export default class User {
         try {
             const res = await models.users.findOne({ where: { email } });
 
-            if (!res) throw new Error(`User with email ${email} not found`);
+            if (!res) return null; // throw new Error(`User with email ${email} not found`);
             return new User(res).get();
         } catch (e) {
             console.log('!Error');
