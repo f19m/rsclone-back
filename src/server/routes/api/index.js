@@ -1,11 +1,13 @@
 import express from 'express';
 import userRouter from './users';
+import userCatRouter from './userCategories';
 import Err from '../../../utils/err';
 
 import UserCategories from '../../models/UserCategories';
 
 const router = express.Router();
 router.use('/', userRouter);
+router.use('/', userCatRouter);
 
 router.get('/test', (req, res, next) => {
     console.log('------------------------');

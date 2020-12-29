@@ -7,4 +7,9 @@ export default class Categories {
         const data = await models.cat_type.findAll();
         return data;
     }
+
+    static async createCategory(catRec) {
+        const data = await models.cat_type.create(catRec);
+        return data;
+    }
 }

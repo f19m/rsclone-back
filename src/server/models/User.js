@@ -27,7 +27,7 @@ export default class User {
 
             if (!res) return null; // throw new Error(`User with email ${email} not found`);
 
-            return res;
+            return res.dataValues;
         } catch (e) {
             console.log('!Error');
             throw new Error(e.message);

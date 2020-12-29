@@ -19,7 +19,7 @@ router.post('/login', (req, res, next) => {
         res.status(400).json(new Err(err.join(',')));
     } else {
         AuthService.login(req.body.email, req.body.password)
-            .then((data) => res.json(JSON.stringify(data)))
+            .then((data) => res.json(data))
             .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
     }
 });
@@ -39,7 +39,7 @@ router.post('/registration', (req, res, next) => {
         res.status(400).json(new Err(err.join(',')));
     } else {
         AuthService.signUp(req.body.email, req.body.password, req.body.name)
-            .then((data) => res.json(JSON.stringify(data)))
+            .then((data) => res.json(data))
             .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
     }
 });

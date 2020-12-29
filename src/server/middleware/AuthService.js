@@ -22,7 +22,6 @@ export default class AuthService {
             }
 
             // get all data for user
-            console.log(`login: userRecord=> ${JSON.stringify(userRecord)}`);
             const catTypes = await Categories.getAllRecords();
             const userCatType = await UserCategories.getAllUserRecords(userRecord);
             const movesArr = await Moves.getUserRecordsWithOffset(userRecord);

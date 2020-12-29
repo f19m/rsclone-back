@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import sequelize from '../../sequelize';
 import defData from './data/usersCat';
 import Moves from './Moves';
@@ -72,5 +73,36 @@ export default class UserCategories {
         let newOffset = parseInt(offset, 10);
         newOffset = res.length < 3 ? newOffset : newOffset + 1;
         return { data: res, offset: newOffset };
+    }
+
+    static async create(catRec, user) {
+        const insertObj = { ...catRec };
+
+        insertObj.user = user.id;
+        insertObj.summa = insertObj.summa || 0;
+
+        const newRec = await models.user_cat.create(insertObj);
+        return newRec;
+    }
+
+    static async update(catRec, user) {
+        console.log(`update data1: ${JSON.stringify(catRec)}`);
+        const insertObj = { ...catRec };
+
+        insertObj.user = user.id;
+
+        console.log(`update data2: ${JSON.stringify(insertObj)}`);
+        await models.user_cat.update(insertObj,
+            {
+                where: {
+                    [Op.and]: [
+                        { id: insertObj.id },
+                        { user: user.id },
+                    ],
+                },
+
+            });
+        const newRec = models.user_cat.findByPk(insertObj.id);
+        return newRec;
     }
 }
