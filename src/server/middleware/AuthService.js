@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../models/User';
 import Categories from '../models/Categories';
 import UserCategories from '../models/UserCategories';
+import Moves from '../models/Moves';
 
 import config from '../config';
 
@@ -24,6 +25,7 @@ export default class AuthService {
             console.log(`login: userRecord=> ${JSON.stringify(userRecord)}`);
             const catTypes = await Categories.getAllRecords();
             const userCatType = await UserCategories.getAllUserRecords(userRecord);
+            const movesArr = await Moves.getUserRecordsWithOffset(userRecord);
             return {
                 data: {
                     categories: catTypes,
@@ -31,6 +33,7 @@ export default class AuthService {
                         email: userRecord.email,
                         name: userRecord.name,
                         userCategories: userCatType,
+                        moves: movesArr,
                     },
                 },
                 token: this.generateToken(userRecord),

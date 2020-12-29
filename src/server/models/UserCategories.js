@@ -24,7 +24,8 @@ export default class UserCategories {
     static async getAllUserRecords(user) {
         //  console.log('UserCategories.getAllUserRecords');
         const res = await models.user_cat.findAll({ where: { user: user.id } });
-        const processArray = async function (array) {
+        async function processArray(array) {
+            // eslint-disable-next-line no-restricted-syntax
             for (const cat of array) {
                 if (cat.type === 1 || cat.type === 3) {
                     const sumByMonth = await Moves.getSumByMonth(cat);
@@ -33,7 +34,7 @@ export default class UserCategories {
                 }
             }
             console.log(` DONE `);
-        };
+        }
 
         await processArray(res);
 
@@ -61,8 +62,15 @@ export default class UserCategories {
     }
 
     static async getAllData2(obj) {
-        const res = Moves.getSumByMonth({ type: obj.type, id: obj.id });
-        console.log(res);
-        return res;
+        const { offset } = obj;
+
+        const res = await models.user_cat.findAll({
+            limit: 3,
+            offset: parseInt(offset, 10) * 3,
+        });
+
+        let newOffset = parseInt(offset, 10);
+        newOffset = res.length < 3 ? newOffset : newOffset + 1;
+        return { data: res, offset: newOffset };
     }
 }

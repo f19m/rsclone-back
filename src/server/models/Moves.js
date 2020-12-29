@@ -2,6 +2,7 @@ import { Op } from 'sequelize';
 import sequelize from '../../sequelize';
 
 const { models } = sequelize;
+const offsetSize = 10;
 
 export default class Moves {
     static async getAllUserRecords(user) {
@@ -9,7 +10,7 @@ export default class Moves {
         return res;
     }
 
-    static async getFirstUserRecords(user) {
+    static async getUserRecordsWithOffset(user, offset = 0) {
         const res = await models.moves.findAll({
             where: {
                 [Op.and]: [
@@ -21,9 +22,13 @@ export default class Moves {
                     },
                 ],
             },
-            limit: 10,
+            limit: offsetSize,
+            offset: offset * offsetSize,
         });
-        return res;
+        let newOffset = parseInt(offset, 10);
+        newOffset = res.length < offsetSize ? newOffset : newOffset + 1;
+
+        return { data: res, offset: newOffset };
     }
 
     static async getSumByMonth(userCat) {
