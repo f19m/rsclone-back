@@ -30,7 +30,7 @@ export default class AuthService {
                     user: {
                         email: userRecord.email,
                         name: userRecord.name,
-                        UserCategories: userCatType,
+                        userCategories: userCatType,
                     },
                 },
                 token: this.generateToken(userRecord),

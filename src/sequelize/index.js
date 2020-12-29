@@ -1,7 +1,8 @@
 import { Sequelize } from 'sequelize';
+import path from 'path';
+import applyExtraSetup from './extra-setup';
 
 // models
-import path from 'path';
 import _usersModel from './models/users.model';
 import _catType from './models/cat_type.model';
 import _userCat from './models/user_cat.model';
@@ -31,14 +32,7 @@ modelDefiners.forEach((modelDefiner) => {
     modelDefiner(sequelize);
 });
 
-sequelize.define('modelName', {
-    columnA: Sequelize.STRING,
-    columnB: Sequelize.STRING,
-    columnC: Sequelize.NUMBER,
-});
-
-console.log('>>>>>>  sequelize   sequelize.models.users <<<<<<');
-console.log(JSON.stringify(sequelize.models.modelName));
+applyExtraSetup(sequelize);
 
 // We export the sequelize connection instance to be used around our app.
 export default sequelize;

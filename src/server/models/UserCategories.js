@@ -1,5 +1,6 @@
 import sequelize from '../../sequelize';
 import defData from './data/usersCat';
+import Moves from './Moves';
 
 const { models } = sequelize;
 
@@ -21,7 +22,47 @@ export default class UserCategories {
     }
 
     static async getAllUserRecords(user) {
+        //  console.log('UserCategories.getAllUserRecords');
         const res = await models.user_cat.findAll({ where: { user: user.id } });
+        const processArray = async function (array) {
+            for (const cat of array) {
+                if (cat.type === 1 || cat.type === 3) {
+                    const sumByMonth = await Moves.getSumByMonth(cat);
+                    cat.summa = sumByMonth;
+                    console.log(`user.name:${user.name};  cat.name: ${cat.name};  summa:${sumByMonth}`);
+                }
+            }
+            console.log(` DONE `);
+        };
+
+        await processArray(res);
+
+        console.log(`      return res:${JSON.stringify(res)}`);
+        return res;
+    }
+
+    static async getAllData(obj) {
+        console.log(`from: ${JSON.stringify(obj.from)}to: ${JSON.stringify(obj.to)}`);
+        const res = await models.user_cat.findAll({
+            limit: 10,
+        });
+
+        const fromObj = await models.user_cat.findOne({ where: { type: 2 } });
+        const toObj = await models.user_cat.findOne({ where: { type: 3 } });
+
+        const fromId = obj.from || fromObj.id;
+        const toId = obj.to || toObj.id;
+
+        await models.moves.create({
+            user: 1, cat_from: fromId, cat_to: toId, date: (new Date()), value: 100, comment: 'test',
+        });
+
+        return res;
+    }
+
+    static async getAllData2(obj) {
+        const res = Moves.getSumByMonth({ type: obj.type, id: obj.id });
+        console.log(res);
         return res;
     }
 }
