@@ -19,8 +19,17 @@ router.post('/login', (req, res, next) => {
         res.status(400).json(new Err(err.join(',')));
     } else {
         AuthService.login(req.body.email, req.body.password)
-            .then((data) => res.json(data))
-            .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+            .then((data) => {
+                console.log('RES OK');
+                return res.status(200).json(data);
+            })
+            .catch((errMsg) => {
+                if (errMsg instanceof Err && errMsg.code) {
+                    res.status(errMsg.code).json(new Err(errMsg.error));
+                } else {
+                    res.status(400).json(new Err(errMsg.message));
+                }
+            });
     }
 });
 
@@ -39,7 +48,10 @@ router.post('/registration', (req, res, next) => {
         res.status(400).json(new Err(err.join(',')));
     } else {
         AuthService.signUp(req.body.email, req.body.password, req.body.name)
-            .then((data) => res.json(data))
+            .then((data) => {
+                console.log('RES OK');
+                return res.status(200).json(data);
+            })
             .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
     }
 });

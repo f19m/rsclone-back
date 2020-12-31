@@ -1,6 +1,9 @@
 export default class Err {
-    constructor(text) {
+    constructor(text, code = null) {
         this.error = text;
+        if (code) {
+            this.code = code;
+        }
         return this;
     }
 }

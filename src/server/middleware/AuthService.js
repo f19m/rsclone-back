@@ -5,6 +5,7 @@ import UserModel from '../models/User';
 import Categories from '../models/Categories';
 import UserCategories from '../models/UserCategories';
 import Moves from '../models/Moves';
+import Err from '../../utils/err';
 
 import config from '../config';
 
@@ -13,12 +14,12 @@ export default class AuthService {
         const userRecord = await UserModel.findOne(email);
 
         if (!userRecord) {
-            throw new Error('User or password incorrect');
+            throw new Err('User or password incorrect', 400);
         } else {
             const correctPassword = await argon2.verify(userRecord.password, password);
 
             if (!correctPassword) {
-                throw new Error('Incorrect password');
+                throw new Err('Incorrect password', 401);
             }
 
             // get all data for user

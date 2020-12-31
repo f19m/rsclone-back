@@ -10,7 +10,8 @@
     "build": "npm run clean && webpack --config config/webpack.config.production.js",
     "setup-db": "node src/database/setup.js",
     "test": "node src/test.js",
-    "watch": "webpack --config config/webpack.config.js --watch"
+    "watch": "webpack --config config/webpack.config.js --watch",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "core-js": "^3.8.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-json-validator-middleware": "^2.1.1",
     "express-jwt": "^6.0.0",
@@ -41,6 +43,7 @@
     "eslint": "^7.16.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "jsdoc": "^3.6.6",
     "nodemon": "^2.0.6",
     "webpack-build-log-plugin": "^1.0.6",
     "webpack-node-externals": "^2.5.2"
