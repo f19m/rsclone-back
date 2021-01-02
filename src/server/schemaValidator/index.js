@@ -34,4 +34,40 @@ schema.categories.update = {
     },
 };
 
+schema.tags.create = {
+    type: 'object',
+    required: ['name'],
+    properties: {
+        name: {
+            type: 'string',
+        },
+
+    },
+};
+
+schema.tags.update = {
+    type: 'object',
+    required: ['id', 'name'],
+    properties: {
+        id: {
+            type: 'number',
+        },
+        name: {
+            type: 'number',
+        },
+
+    },
+};
+
+schema.tags.delete = {
+    type: 'object',
+    required: ['id'],
+    properties: {
+        id: {
+            type: 'number',
+        },
+
+    },
+};
+
 export default schema;
