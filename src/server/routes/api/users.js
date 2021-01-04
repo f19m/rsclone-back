@@ -35,6 +35,7 @@ router.post('/login', (req, res, next) => {
 
 router.post('/registration', (req, res, next) => {
     const err = [];
+    console.log('>>>>>>>>>>>>>>>>  req.body');
     if (!req.body.password) {
         err.push('No password specified');
     }
@@ -47,6 +48,7 @@ router.post('/registration', (req, res, next) => {
     if (err.length) {
         res.status(400).json(new Err(err.join(',')));
     } else {
+        console.log(req.body);
         AuthService.signUp(req.body.email, req.body.password, req.body.name)
             .then((data) => {
                 console.log('RES OK');
@@ -58,6 +60,13 @@ router.post('/registration', (req, res, next) => {
 
 router.post('/users', auth.required, attachCurrentUser, (req, res, next) => {
     User.getAll()
+        .then((data) => res.json(data))
+        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+});
+
+router.post('/user/getInfo', auth.required, attachCurrentUser, (req, res, next) => {
+    const user = req.currentUser;
+    User.getUserInfo(user)
         .then((data) => res.json(data))
         .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
 });

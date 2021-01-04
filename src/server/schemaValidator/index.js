@@ -34,6 +34,8 @@ schema.categories.update = {
     },
 };
 
+schema.tags = {};
+
 schema.tags.create = {
     type: 'object',
     required: ['name'],

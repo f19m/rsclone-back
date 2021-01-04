@@ -2,14 +2,31 @@
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/User';
-import Categories from '../models/Categories';
-import UserCategories from '../models/UserCategories';
-import Moves from '../models/Moves';
 import Err from '../../utils/err';
 
 import config from '../config';
 
-export default class AuthService {
+/**
+ * AuthService class
+ */
+
+class AuthService {
+    /**
+     * @typedef {loginUserData} loginUserData
+     * @property {Object} data object with all info
+     * @property {Object} data.user object with user info
+     * @property {String} data.user.email user email
+     * @property {String} data.user.name user name
+     * @property {Object[]} data.user.categories array of user categories object
+     * @property {String} data.token JWT token for requests requiring authorization
+     */
+
+    /**
+     * method for user authorization
+     * @param {String} email user email
+     * @param {String} password user password
+     * @return {loginUserData} object with user information data
+     */
     static async login(email, password) {
         const userRecord = await UserModel.findOne(email);
 
@@ -22,20 +39,9 @@ export default class AuthService {
                 throw new Err('Incorrect password', 401);
             }
 
-            // get all data for user
-            const catTypes = await Categories.getAllRecords();
-            const userCatType = await UserCategories.getAllUserRecords(userRecord);
-            const movesArr = await Moves.getUserRecordsWithOffset(userRecord);
+            const resData = await UserModel.getUserInfo(userRecord);
             return {
-                data: {
-                    categories: catTypes,
-                    user: {
-                        email: userRecord.email,
-                        name: userRecord.name,
-                        userCategories: userCatType,
-                        moves: movesArr,
-                    },
-                },
+                data: resData,
                 token: this.generateToken(userRecord),
             };
         }
@@ -78,3 +84,5 @@ export default class AuthService {
 
     }
 }
+
+export default AuthService;
