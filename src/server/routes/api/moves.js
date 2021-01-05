@@ -1,7 +1,7 @@
 import express from 'express';
 import mid from '../../middleware';
 import Err from '../../../utils/err';
-import Tags from '../../models/Tags';
+import Moves from '../../models/Moves';
 import schema from '../../schemaValidator';
 
 const router = express.Router();
@@ -9,44 +9,41 @@ const {
     auth, attachCurrentUser, validate,
 } = mid;
 
-router.use('/tags', router);
+router.use('/moves', router);
 
 router.post('/get', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('get');
-    Tags.getAllRecords(req.currentUser)
+    console.log('/moves/get');
+    const offset = req.currentUser.body.offset || 0;
+
+    Moves.getUserRecordsWithOffset(req.currentUser, offset)
+        .then((data) => res.json(data))
+        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+});
+
+router.post('/getAll', auth.required, attachCurrentUser, (req, res, next) => {
+    console.log('/moves/getAll');
+
+    Moves.getAllUserRecords(req.currentUser)
+        .then((data) => res.json(data))
+        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+});
+
+router.post('/getByCategory', auth.required, attachCurrentUser, (req, res, next) => {
+    console.log('/moves/getByCategory');
+    const { category } = req.body;
+
+    Moves.getAllUserRecordsByCategory(req.currentUser, category)
         .then((data) => res.json(data))
         .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
 });
 
 router.post('/create', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('>>>>>>>   set:   req.body');
+    console.log('/moves/ >>>>>>>   set:   req.body');
 
-    const tagName = req.body.name;
+    const moveData = req.body.move;
     const user = req.currentUser;
 
-    Tags.create({ name: tagName, user })
-        .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
-});
-
-router.post('/update', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log(`>>>>>>>   categories/update${req.body}`);
-
-    const tagRec = req.body;
-    const user = req.currentUser;
-
-    Tags.update({ tag: tagRec, user })
-        .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
-});
-
-router.post('/delete', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log(`>>>>>>>   categories/update${req.body}`);
-
-    const tag = req.body;
-    const user = req.currentUser;
-
-    Tags.update({ tag, user })
+    Moves.create({ data: moveData, user })
         .then((data) => res.json(data))
         .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
 });
