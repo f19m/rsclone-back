@@ -346,6 +346,158 @@
           }
         ]
       }
+    },
+    "/api/moves/get": {
+      "post": {
+        "tags": [
+          "moves"
+        ],
+        "summary": "This get user money moves with offset by using token",
+        "description": "This get user money moves by using token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_6"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/moves/getAll": {
+      "post": {
+        "tags": [
+          "moves"
+        ],
+        "summary": "This get all user money moves with offset by using token",
+        "description": "This get all user money moves by using token",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Moves"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/moves/getByCategory": {
+      "post": {
+        "tags": [
+          "moves"
+        ],
+        "summary": "This get all user money moves with by category using token",
+        "description": "This get all user money moves by category using token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_7"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Moves"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/moves/create": {
+      "post": {
+        "tags": [
+          "moves"
+        ],
+        "summary": "This create a new user money move",
+        "description": "This create a new user money move",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_8"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -467,6 +619,12 @@
           "comment": {
             "type": "string",
             "description": "comment for operation"
+          },
+          "tag_arr": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagsArr"
+            }
           }
         }
       },
@@ -603,6 +761,100 @@
           "name": {
             "type": "string",
             "description": "name of user tag"
+          }
+        }
+      },
+      "body_6": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "description": "data offset, default 0"
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Moves"
+            }
+          },
+          "offset": {
+            "type": "string",
+            "description": "next data offset, default 0"
+          }
+        }
+      },
+      "body_7": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/UserCategories"
+          }
+        }
+      },
+      "apimovescreate_move_tag_arr": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "integer",
+            "description": "user tag id"
+          }
+        }
+      },
+      "apimovescreate_move": {
+        "type": "object",
+        "properties": {
+          "cat_from": {
+            "type": "integer",
+            "description": "move from user category ($ref '#/components/schemas/UserCategories')"
+          },
+          "cat_to": {
+            "type": "integer",
+            "description": "move to user category  ($ref '#/components/schemas/UserCategories')"
+          },
+          "date": {
+            "type": "string",
+            "description": "string format of day - \"dd.mm.yyyy\""
+          },
+          "value": {
+            "type": "number",
+            "description": "summa of operation"
+          },
+          "comment": {
+            "type": "string",
+            "description": "comment for operation"
+          },
+          "tag_arr": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/apimovescreate_move_tag_arr"
+            }
+          }
+        }
+      },
+      "body_8": {
+        "type": "object",
+        "properties": {
+          "move": {
+            "$ref": "#/components/schemas/apimovescreate_move"
+          }
+        }
+      },
+      "inline_response_200_2": {
+        "type": "object",
+        "properties": {
+          "move": {
+            "$ref": "#/components/schemas/Moves"
+          },
+          "cat_from": {
+            "$ref": "#/components/schemas/UserCategories"
+          },
+          "cat_to": {
+            "$ref": "#/components/schemas/UserCategories"
           }
         }
       },

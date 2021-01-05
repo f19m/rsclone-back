@@ -75,7 +75,7 @@ class AuthService {
             email: user.email,
         };
         const signature = config.secret;
-        const expiration = '1h';
+        const { expiration } = config;
 
         return jwt.sign({ data }, signature, { expiresIn: expiration });
     }

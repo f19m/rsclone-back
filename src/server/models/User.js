@@ -2,6 +2,7 @@ import sequelize from '../../sequelize';
 import UserCategories from './UserCategories';
 import Moves from './Moves';
 import Categories from './Categories';
+import Tags from './Tags';
 
 const { models } = sequelize;
 
@@ -39,6 +40,7 @@ class User {
         const catTypes = await Categories.getAllRecords();
         const userCatType = await UserCategories.getAllUserRecords(user);
         const movesArr = await Moves.getUserRecordsWithOffset(user);
+        const tagsArr = await Tags.getAllRecords(user);
 
         return {
             categories: catTypes,
@@ -47,6 +49,7 @@ class User {
                 name: user.name,
                 userCategories: userCatType,
                 moves: movesArr,
+                tags: tagsArr,
             },
         };
     }

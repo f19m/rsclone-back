@@ -22,6 +22,19 @@ export default class UserCategories {
         });
     }
 
+    static async getCatById(id, user) {
+        const dbObj = await models.user_cat.findOne({
+            where: {
+                [Op.and]: [
+                    { id },
+                    { user: user.id },
+                ],
+            },
+        });
+        const res = dbObj.dataValues;
+        return res;
+    }
+
     static async getAllUserRecords(user) {
         //  console.log('UserCategories.getAllUserRecords');
         const res = await models.user_cat.findAll({ where: { user: user.id } });
@@ -86,12 +99,14 @@ export default class UserCategories {
     }
 
     static async update(catRec, user) {
-        console.log(`update data1: ${JSON.stringify(catRec)}`);
+        console.log(`update data1`);
+        console.log(catRec);
         const insertObj = { ...catRec };
 
         insertObj.user = user.id;
 
-        console.log(`update data2: ${JSON.stringify(insertObj)}`);
+        console.log(`update data2`);
+        console.log(insertObj);
         await models.user_cat.update(insertObj,
             {
                 where: {

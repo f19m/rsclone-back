@@ -23,13 +23,7 @@ router.post('/login', (req, res, next) => {
                 console.log('RES OK');
                 return res.status(200).json(data);
             })
-            .catch((errMsg) => {
-                if (errMsg instanceof Err && errMsg.code) {
-                    res.status(errMsg.code).json(new Err(errMsg.error));
-                } else {
-                    res.status(400).json(new Err(errMsg.message));
-                }
-            });
+            .catch((errMsg) => Err.errRet(res, errMsg));
     }
 });
 

@@ -72,4 +72,16 @@ schema.tags.delete = {
     },
 };
 
+schema.moves = {};
+schema.tags.get = {
+    type: 'object',
+    required: ['offset'],
+    properties: {
+        offset: {
+            type: 'number',
+        },
+
+    },
+};
+
 export default schema;
