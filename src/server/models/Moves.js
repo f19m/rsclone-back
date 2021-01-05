@@ -20,8 +20,6 @@ export default class Moves {
     }
 
     static async getAllUserRecordsByCategory(user, cat) {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>> cat');
-        console.log(cat);
         const res = await models.moves.findAll({
             include: [{ model: models.tags_arr, as: 'tagsArr' }],
             order: [
@@ -75,7 +73,6 @@ export default class Moves {
         let ret;
 
         if (userCat.type === 1 || userCat.type === '1') {
-            console.log('#1');
             res = await models.moves.findAll({
                 attributes: [
                     'cat_from',
@@ -96,7 +93,6 @@ export default class Moves {
 
             // ret = res.length ? res[0].total_value : 0;
         } if (userCat.type === 3 || userCat.type === '3') {
-            console.log('#2');
             res = await models.moves.findAll({
                 attributes: [
                     'cat_to',
@@ -125,9 +121,6 @@ export default class Moves {
         const moveObj = { ...data };
         const tagArr = data.tag_arr;
 
-        console.log('>>>>>>>>>>>>> data MOVE: data');
-        console.log(data);
-
         if (moveObj.tag_arr) delete moveObj.tag_arr;
         moveObj.user = user.id;
         moveObj.date = Date.parse(moveObj.date);
@@ -135,54 +128,40 @@ export default class Moves {
         const catFrom = await UserCat.getCatById(moveObj.cat_from, user);
         const catTo = await UserCat.getCatById(moveObj.cat_to, user);
 
-        console.log('#0');
         if (!((catFrom.type === 1 && catTo.type === 2)
             || (catFrom.type === 2 && catTo.type === 2)
             || (catFrom.type === 2 && catTo.type === 3))) {
-            console.log('#PRAGMA');
             throw new Err('Method not implemented for this types of categpries', 500);
         }
-        console.log('#a');
+
         const newMove = await models.moves.create(moveObj);
         const prmTagArr = [];
 
-        console.log('#b');
         tagArr.forEach((tagItem) => {
-            console.log('tagItem');
-            console.log(tagItem);
-
             const tagArrObj = {};
             tagArrObj.collection = newMove.id;
             tagArrObj.tag = tagItem.tag;
             prmTagArr.push(models.tags_arr.create(tagArrObj));
         });
-
-        console.log('#с');
         await Promise.all(prmTagArr);
 
-        console.log('#d');
         if (catFrom.type === 2) {
             catFrom.summa -= moveObj.value;
         } else {
             catFrom.summa = await this.getSumByMonth(catFrom);
         }
-
         if (catTo.type === 2) {
             catTo.summa += moveObj.value;
         } else {
             catTo.summa = await this.getSumByMonth(catTo);
         }
 
-        console.log('#1');
         await UserCat.update(catFrom, user);
-        console.log('#2');
         await UserCat.update(catTo, user);
-        console.log('#3');
         const res = await models.moves.findByPk(newMove.id, {
             include: [{ model: models.tags_arr, as: 'tagsArr' }],
         });
 
-        console.log('#4');
         return { move: res, cat_from: catFrom, cat_to: catTo };
     }
 }
