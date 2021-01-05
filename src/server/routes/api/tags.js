@@ -11,44 +11,37 @@ const {
 
 router.use('/tags', router);
 
-router.post('/get', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('get');
+router.post('/get', auth.required, attachCurrentUser, (req, res) => {
     Tags.getAllRecords(req.currentUser)
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/create', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('>>>>>>>   set:   req.body');
-
+router.post('/create', auth.required, attachCurrentUser, (req, res) => {
     const tagName = req.body.name;
     const user = req.currentUser;
 
     Tags.create({ name: tagName, user })
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/update', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log(`>>>>>>>   categories/update${req.body}`);
-
+router.post('/update', auth.required, attachCurrentUser, (req, res) => {
     const tagRec = req.body;
     const user = req.currentUser;
 
     Tags.update({ tag: tagRec, user })
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/delete', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log(`>>>>>>>   categories/update${req.body}`);
-
+router.post('/delete', auth.required, attachCurrentUser, (req, res) => {
     const tag = req.body;
     const user = req.currentUser;
 
     Tags.update({ tag, user })
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
 export default router;

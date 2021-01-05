@@ -11,41 +11,35 @@ const {
 
 router.use('/moves', router);
 
-router.post('/get', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('/moves/get');
+router.post('/get', auth.required, attachCurrentUser, (req, res) => {
     const offset = req.currentUser.body.offset || 0;
 
     Moves.getUserRecordsWithOffset(req.currentUser, offset)
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/getAll', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('/moves/getAll');
-
+router.post('/getAll', auth.required, attachCurrentUser, (req, res) => {
     Moves.getAllUserRecords(req.currentUser)
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/getByCategory', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('/moves/getByCategory');
+router.post('/getByCategory', auth.required, attachCurrentUser, (req, res) => {
     const { category } = req.body;
 
     Moves.getAllUserRecordsByCategory(req.currentUser, category)
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/create', auth.required, attachCurrentUser, (req, res, next) => {
-    console.log('/moves/ >>>>>>>   set:   req.body');
-
+router.post('/create', auth.required, attachCurrentUser, (req, res) => {
     const moveData = req.body.move;
     const user = req.currentUser;
 
     Moves.create({ data: moveData, user })
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
 export default router;

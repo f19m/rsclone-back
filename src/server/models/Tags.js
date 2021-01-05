@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import sequelize from '../../sequelize';
+import Err from '../../utils/err';
 
 const { models } = sequelize;
 
@@ -10,8 +11,16 @@ export default class Tags {
     }
 
     static async create({ name, user }) {
-        const data = await models.tags.create({ name, user: user.id });
-        return data;
+        try {
+            const data = await models.tags.create({ name, user: user.id });
+            return data;
+        } catch (e) {
+            if (e.original.errno === 19) {
+                throw new Err('Duplicate value', 409);
+            }
+            console.log(e);
+            throw new Error(e);
+        }
     }
 
     static async edit({ user, tag }) {
