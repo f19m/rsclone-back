@@ -1,0 +1,653 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RsClone-back",
+    "description": "An API for rsclone coinkeeper project",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/f19m/rsclone-back/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://f19m-rsclone-back.herokuapp.com/"
+    }
+  ],
+  "paths": {
+    "/api/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "This verifies and logs users in",
+        "description": "ReturnsLogin user and return userInfo and token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User or password incorrect"
+          },
+          "401": {
+            "description": "Incorrect password"
+          }
+        }
+      }
+    },
+    "/api/registration": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "This create new user",
+        "description": "This create new user and return user email and user name",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User already exists or some else problem"
+          }
+        }
+      }
+    },
+    "/api/user/getInfo": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "This get user info by using token",
+        "description": "This get user info by using token",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Token expire or incrorrect"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/categories/get": {
+      "post": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "This get user categories by using token",
+        "description": "This get user categories by using token",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserCategories"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/categories/create": {
+      "post": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "This create a new user categories by using token and input data",
+        "description": "This create a new user categories by using token and input data",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserCategories"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/categories/update": {
+      "post": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "This update user categories by using token and input data",
+        "description": "This update user categories by using token and input data",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_3"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserCategories"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tags/get": {
+      "post": {
+        "tags": [
+          "tags"
+        ],
+        "summary": "This get user tags by using token",
+        "description": "This get user tags by using token",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tags"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tags/create": {
+      "post": {
+        "tags": [
+          "tags"
+        ],
+        "summary": "This create a new user tags by using token",
+        "description": "This create a new user tags by using token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_4"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tags"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tags/update": {
+      "post": {
+        "tags": [
+          "tags"
+        ],
+        "summary": "This update user tags by using token",
+        "description": "This update user tags by using token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_5"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tags"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Users": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id in 'users' DB table"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of user"
+          },
+          "email": {
+            "type": "string",
+            "description": "email of user"
+          }
+        }
+      },
+      "Categories": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id in 'cat_type' DB table"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of category"
+          },
+          "code": {
+            "type": "string",
+            "description": "Userscode of category"
+          },
+          "allowPlan": {
+            "type": "boolean",
+            "description": "is category has plan value"
+          }
+        }
+      },
+      "UserCategories": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id in 'user_cat' DB table"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of user category"
+          },
+          "user": {
+            "type": "integer",
+            "description": "id of the user who owns the category ($ref to Users)"
+          },
+          "type": {
+            "type": "integer",
+            "description": "id of the type of category (ref to Categories)"
+          },
+          "plan": {
+            "type": "number",
+            "description": "is plan value of expenses/income by month"
+          },
+          "summa": {
+            "type": "number",
+            "description": "curent summa of expenses, is actual for type = 2[id]"
+          },
+          "icoUrl": {
+            "type": "string",
+            "description": "name of material-design icon"
+          }
+        }
+      },
+      "Tags": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id in 'tags' DB table"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of tag"
+          },
+          "user": {
+            "type": "integer",
+            "description": "user owner of tag ($ref '#/components/schemas/Users')"
+          }
+        }
+      },
+      "Moves": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id in 'moves' DB table"
+          },
+          "user": {
+            "type": "integer",
+            "description": "user owner of move ($ref '#/components/schemas/Users')"
+          },
+          "cat_from": {
+            "type": "integer",
+            "description": "move from user category ($ref '#/components/schemas/UserCategories')"
+          },
+          "cat_to": {
+            "type": "integer",
+            "description": "move to user category  ($ref '#/components/schemas/UserCategories')"
+          },
+          "date": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "description": "summa of operation"
+          },
+          "comment": {
+            "type": "string",
+            "description": "comment for operation"
+          }
+        }
+      },
+      "TagsArr": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id in 'tags_arr' DB table"
+          },
+          "collection": {
+            "type": "integer",
+            "description": "reference to move id from Moves ($ref '#/components/schemas/Moves')"
+          },
+          "tag": {
+            "type": "integer",
+            "description": "reference to user Tag id from tags ($ref '#/components/schemas/Tags')"
+          }
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "$ref": "#/components/schemas/Categories"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserInfo_user"
+          }
+        }
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "passowrd": {
+            "type": "string"
+          }
+        }
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/UserInfo"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "body_1": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "passowrd": {
+            "type": "string"
+          }
+        }
+      },
+      "body_2": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of user category"
+          },
+          "type": {
+            "type": "integer",
+            "description": "id of the type of category (ref to Categories)"
+          },
+          "plan": {
+            "type": "number",
+            "description": "is plan value of expenses/income by month"
+          },
+          "summa": {
+            "type": "number",
+            "description": "curent summa of expenses, is actual for type = 2[id]"
+          },
+          "icoUrl": {
+            "type": "string",
+            "description": "name of material-design icon"
+          }
+        }
+      },
+      "body_3": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id of user category"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of user category"
+          },
+          "plan": {
+            "type": "number",
+            "description": "is plan value of expenses/income by month is actual for type = 1 & 3 [id]"
+          },
+          "summa": {
+            "type": "number",
+            "description": "curent summa of expenses, is actual for type = 2[id]"
+          },
+          "icoUrl": {
+            "type": "string",
+            "description": "name of material-design icon"
+          }
+        }
+      },
+      "body_4": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of tag"
+          }
+        }
+      },
+      "body_5": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of user tag"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of user tag"
+          }
+        }
+      },
+      "UserInfo_user": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "userCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserCategories"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tags"
+            }
+          },
+          "moves": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Moves"
+            }
+          },
+          "tagsArr": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagsArr"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

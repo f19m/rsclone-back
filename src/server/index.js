@@ -1,13 +1,19 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 import router from './routes';
 import Err from '../utils/err';
 import mid from './middleware';
-
-const app = express();
 // const isProd = process.env.NODE_ENV === 'production'
 // app.use(cors());
+
+import swaggerDocument from '../../readme/f19m-rsclone-back-1.0.0-resolved.json';
+
+const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

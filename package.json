@@ -10,8 +10,7 @@
     "build": "npm run clean && webpack --config config/webpack.config.production.js",
     "setup-db": "node src/database/setup.js",
     "test": "node src/test.js",
-    "watch": "webpack --config config/webpack.config.js --watch",
-    "doc": "jsdoc -c jsdoc.json"
+    "watch": "webpack --config config/webpack.config.js --watch"
   },
   "keywords": [],
   "author": "",
@@ -45,6 +44,7 @@
     "eslint-plugin-import": "^2.22.1",
     "jsdoc": "^3.6.6",
     "nodemon": "^2.0.6",
+    "swagger-ui-express": "^4.1.6",
     "webpack-build-log-plugin": "^1.0.6",
     "webpack-node-externals": "^2.5.2"
   }
