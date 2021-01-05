@@ -50,23 +50,18 @@ class AuthService {
     static async signUp(email, password, name) {
         const passwordHashed = await argon2.hash(password);
 
-        try {
-            const userRecord = await UserModel.create({
-                password: passwordHashed,
-                email,
-                name,
-            });
+        const userRecord = await UserModel.create({
+            password: passwordHashed,
+            email,
+            name,
+        });
 
-            return {
-                user: {
-                    email: userRecord.email,
-                    name: userRecord.name,
-                },
-            };
-        } catch (error) {
-            console.log(`AuthService: error: ${error}`);
-            throw new Error(error.message);
-        }
+        return {
+            user: {
+                email: userRecord.email,
+                name: userRecord.name,
+            },
+        };
     }
 
     static generateToken(user) {
@@ -78,10 +73,6 @@ class AuthService {
         const { expiration } = config;
 
         return jwt.sign({ data }, signature, { expiresIn: expiration });
-    }
-
-    static exec(jwt, query) {
-
     }
 }
 

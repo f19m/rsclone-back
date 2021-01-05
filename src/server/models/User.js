@@ -3,6 +3,7 @@ import UserCategories from './UserCategories';
 import Moves from './Moves';
 import Categories from './Categories';
 import Tags from './Tags';
+import Err from '../../utils/err';
 
 const { models } = sequelize;
 
@@ -13,12 +14,9 @@ class User {
             await UserCategories.createCustomRecords(user);
             return user;
         } catch (e) {
-            console.log(e.message);
-            if (e.errno === 19) {
-                console.log('#create - 2.1');
-                throw new Error(`User with email "${userRec.email}" has aldready exist`);
+            if (e.original.errno === 19) {
+                throw new Err(`User with email ${userRec.email} has aldready exist`, 409);
             } else {
-                console.log('#create - 2.2');
                 throw new Error(e.message);
             }
         }

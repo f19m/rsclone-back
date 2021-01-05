@@ -8,15 +8,12 @@ const { models } = sequelize;
 export default class UserCategories {
     static async createCustomRecords(user) {
         Object.keys(defData).forEach((typeCode) => {
-            console.log(`UserCategories.createCustomRecords : typeCode = ${typeCode}`);
-
             models.cat_type.findOne({ where: { code: typeCode } }).then((type) => {
                 defData[typeCode].forEach(async (cur) => {
                     const curObj = { ...cur };
                     curObj.user = user.id;
                     curObj.type = type.id;
                     const res = await models.user_cat.create(curObj);
-                    console.log(`add data: ${JSON.stringify(res)}`);
                 });
             });
         });
@@ -38,26 +35,23 @@ export default class UserCategories {
     static async getAllUserRecords(user) {
         //  console.log('UserCategories.getAllUserRecords');
         const res = await models.user_cat.findAll({ where: { user: user.id } });
+
         async function processArray(array) {
             // eslint-disable-next-line no-restricted-syntax
             for (const cat of array) {
                 if (cat.type === 1 || cat.type === 3) {
                     const sumByMonth = await Moves.getSumByMonth(cat);
                     cat.summa = sumByMonth;
-                    console.log(`user.name:${user.name};  cat.name: ${cat.name};  summa:${sumByMonth}`);
                 }
             }
-            console.log(` DONE `);
         }
 
         await processArray(res);
 
-        console.log(`      return res:${JSON.stringify(res)}`);
         return res;
     }
 
     static async getAllData(obj) {
-        console.log(`from: ${JSON.stringify(obj.from)}to: ${JSON.stringify(obj.to)}`);
         const res = await models.user_cat.findAll({
             limit: 10,
         });
@@ -99,14 +93,9 @@ export default class UserCategories {
     }
 
     static async update(catRec, user) {
-        console.log(`update data1`);
-        console.log(catRec);
         const insertObj = { ...catRec };
-
         insertObj.user = user.id;
 
-        console.log(`update data2`);
-        console.log(insertObj);
         await models.user_cat.update(insertObj,
             {
                 where: {
