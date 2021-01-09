@@ -16,9 +16,7 @@ import _tagsArr from './models/tags_arr.model';
 
 console.log(`__dirname: ${__dirname}`);
 const sequelize = new Sequelize({
-    process.env.DATABASE,
-    process.env.DATABASE_USER,
-    process.env.DATABASE_PASSWORD,
+    url: process.env.DEV_DATABASE_URL,
     dialect: 'postgres',
     //storage: path.join(__dirname, '..', 'db.sqlite'),
     // logQueryParameters: true,
