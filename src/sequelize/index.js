@@ -16,10 +16,13 @@ import _tagsArr from './models/tags_arr.model';
 
 console.log(`__dirname: ${__dirname}`);
 const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.join(__dirname, '..', 'db.sqlite'),
-    logQueryParameters: true,
-    benchmark: true,
+    process.env.DATABASE,
+    process.env.DATABASE_USER,
+    process.env.DATABASE_PASSWORD,
+    dialect: 'postgres',
+    //storage: path.join(__dirname, '..', 'db.sqlite'),
+    // logQueryParameters: true,
+    // benchmark: true,
 });
 
 const modelDefiners = [
