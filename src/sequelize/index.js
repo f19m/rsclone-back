@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import path from 'path';
+import pg from 'pg';
 import applyExtraSetup from './extra-setup';
 
 // models
@@ -14,14 +15,39 @@ import _tagsArr from './models/tags_arr.model';
 // But for this example, we will just use a local SQLite database.
 // const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
 
-console.log(`__dirname: ${__dirname}`);
-const sequelize = new Sequelize({
-    url: process.env.DEV_DATABASE_URL,
+pg.defaults.ssl = false;
+
+const cloud_config = {
+    username: 'tvvdnlvsoajxhh',
+    database: 'dbdtjsb572lg2e',
+    password: '844034f47b986c3c875d8eeedf2ef963575410dcf63068ff5baaa2ba0defad25',
+    host: 'ec2-99-81-238-134.eu-west-1.compute.amazonaws.com',
+    port: 5432,
+    ssl: true,
     dialect: 'postgres',
-    //storage: path.join(__dirname, '..', 'db.sqlite'),
-    // logQueryParameters: true,
-    // benchmark: true,
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
+};
+
+const pool = new pg.Pool();
+
+pool.on('error', (err, client) => {
+    console.error('Unexpected error on idle client', err);
+    process.exit(-1);
 });
+
+pool.on('connect', (err, client) => {
+    if (err) console.error(err);
+    console.log(client);
+    console.log('Successfully connected to postgres.');
+});
+
+const dbUrl = 'postgres://tvvdnlvsoajxhh:844034f47b986c3c875d8eeedf2ef963575410dcf63068ff5baaa2ba0defad25@ec2-99-81-238-134.eu-west-1.compute.amazonaws.com:5432/dbdtjsb572lg2e';
+const sequelize = new Sequelize(cloud_config);
 
 const modelDefiners = [
     _usersModel, _catType, _userCat,
