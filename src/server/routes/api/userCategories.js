@@ -1,6 +1,5 @@
 import express from 'express';
 import mid from '../../middleware';
-import User from '../../models/User';
 import Err from '../../../utils/err';
 import UserCategories from '../../models/UserCategories';
 import schema from '../../schemaValidator';

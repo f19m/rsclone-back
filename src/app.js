@@ -3,9 +3,9 @@ import db from './database/setup';
 import server from './server/index';
 import config from './server/config';
 
-// db.create();
+db.create();
 // db.reset();
-sequelize.sync();
+// sequelize.sync();
 
 const HTTP_PORT = config.port;
 
