@@ -68,11 +68,10 @@ export default class Moves {
         return { data: res, offset: newOffset };
     }
 
-    static async getSumByMonth(userCat) {
+    static async getSumByMonth(userCatRec) {
         let res = [];
-        let ret;
 
-        if (userCat.type === 1 || userCat.type === '1') {
+        if (userCatRec.type === 1 || userCatRec.type === '1') {
             res = await models.moves.findAll({
                 attributes: [
                     'cat_from',
@@ -80,7 +79,7 @@ export default class Moves {
                 ],
                 where: {
                     [Op.and]: [
-                        { cat_from: userCat.id },
+                        { cat_from: userCatRec.id },
                         {
                             date: {
                                 [Op.gte]: new Date(`${(new Date()).getFullYear()}/${(new Date()).getMonth() + 1}/01`),
@@ -92,7 +91,7 @@ export default class Moves {
             });
 
             // ret = res.length ? res[0].total_value : 0;
-        } if (userCat.type === 3 || userCat.type === '3') {
+        } if (userCatRec.type === 3 || userCatRec.type === '3') {
             res = await models.moves.findAll({
                 attributes: [
                     'cat_to',
@@ -100,7 +99,7 @@ export default class Moves {
                 ],
                 where: {
                     [Op.and]: [
-                        { cat_to: userCat.id },
+                        { cat_to: userCatRec.id },
                         {
                             date: {
                                 [Op.gte]: new Date(`${(new Date()).getFullYear()}/${(new Date()).getMonth() + 1}/01`),

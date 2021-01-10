@@ -13,7 +13,7 @@ export default class UserCategories {
                     const curObj = { ...cur };
                     curObj.user = user.id;
                     curObj.type = type.id;
-                    const res = await models.user_cat.create(curObj);
+                    await models.user_cat.create(curObj);
                 });
             });
         });
@@ -49,37 +49,6 @@ export default class UserCategories {
         await processArray(res);
 
         return res;
-    }
-
-    static async getAllData(obj) {
-        const res = await models.user_cat.findAll({
-            limit: 10,
-        });
-
-        const fromObj = await models.user_cat.findOne({ where: { type: 2 } });
-        const toObj = await models.user_cat.findOne({ where: { type: 3 } });
-
-        const fromId = obj.from || fromObj.id;
-        const toId = obj.to || toObj.id;
-
-        await models.moves.create({
-            user: 1, cat_from: fromId, cat_to: toId, date: (new Date()), value: 100, comment: 'test',
-        });
-
-        return res;
-    }
-
-    static async getAllData2(obj) {
-        const { offset } = obj;
-
-        const res = await models.user_cat.findAll({
-            limit: 3,
-            offset: parseInt(offset, 10) * 3,
-        });
-
-        let newOffset = parseInt(offset, 10);
-        newOffset = res.length < 3 ? newOffset : newOffset + 1;
-        return { data: res, offset: newOffset };
     }
 
     static async create(catRec, user) {
