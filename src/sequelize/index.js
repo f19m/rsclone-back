@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import path from 'path';
+import pg from 'pg';
 import applyExtraSetup from './extra-setup';
 
 // models
@@ -14,12 +14,30 @@ import _tagsArr from './models/tags_arr.model';
 // But for this example, we will just use a local SQLite database.
 // const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
 
-console.log(`__dirname: ${__dirname}`);
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.join(__dirname, '..', 'db.sqlite'),
-    logQueryParameters: true,
-    benchmark: true,
+pg.defaults.ssl = false;
+
+const pool = new pg.Pool();
+
+pool.on('error', (err, client) => {
+    console.error('Unexpected error on idle client', err);
+    process.exit(-1);
+});
+
+pool.on('connect', (err, client) => {
+    if (err) console.error(err);
+    console.log(client);
+    console.log('Successfully connected to postgres.');
+});
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
+
 });
 
 const modelDefiners = [
