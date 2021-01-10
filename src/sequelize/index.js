@@ -1,5 +1,4 @@
 import { Sequelize } from 'sequelize';
-import path from 'path';
 import pg from 'pg';
 import applyExtraSetup from './extra-setup';
 
@@ -17,22 +16,6 @@ import _tagsArr from './models/tags_arr.model';
 
 pg.defaults.ssl = false;
 
-const cloud_config = {
-    username: 'tvvdnlvsoajxhh',
-    database: 'dbdtjsb572lg2e',
-    password: '844034f47b986c3c875d8eeedf2ef963575410dcf63068ff5baaa2ba0defad25',
-    host: 'ec2-99-81-238-134.eu-west-1.compute.amazonaws.com',
-    port: 5432,
-    ssl: true,
-    dialect: 'postgres',
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false,
-        },
-    },
-};
-
 const pool = new pg.Pool();
 
 pool.on('error', (err, client) => {
@@ -46,8 +29,16 @@ pool.on('connect', (err, client) => {
     console.log('Successfully connected to postgres.');
 });
 
-const dbUrl = 'postgres://tvvdnlvsoajxhh:844034f47b986c3c875d8eeedf2ef963575410dcf63068ff5baaa2ba0defad25@ec2-99-81-238-134.eu-west-1.compute.amazonaws.com:5432/dbdtjsb572lg2e';
-const sequelize = new Sequelize(cloud_config);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
+
+});
 
 const modelDefiners = [
     _usersModel, _catType, _userCat,
