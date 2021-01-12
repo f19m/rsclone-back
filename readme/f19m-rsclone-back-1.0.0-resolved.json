@@ -498,6 +498,45 @@
           }
         ]
       }
+    },
+    "/api/moves/delete": {
+      "post": {
+        "tags": [
+          "moves"
+        ],
+        "summary": "This delete an user money move",
+        "description": "This delete an user money move",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_9"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -855,6 +894,35 @@
           },
           "cat_to": {
             "$ref": "#/components/schemas/UserCategories"
+          }
+        }
+      },
+      "apimovesdelete_move": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "move id"
+          },
+          "cat_from": {
+            "type": "integer",
+            "description": "move from user category ($ref '#/components/schemas/UserCategories')"
+          },
+          "cat_to": {
+            "type": "integer",
+            "description": "move to user category  ($ref '#/components/schemas/UserCategories')"
+          },
+          "value": {
+            "type": "number",
+            "description": "summa of operation"
+          }
+        }
+      },
+      "body_9": {
+        "type": "object",
+        "properties": {
+          "move": {
+            "$ref": "#/components/schemas/apimovesdelete_move"
           }
         }
       },

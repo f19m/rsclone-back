@@ -28,7 +28,7 @@ export default class UserCategories {
                 ],
             },
         });
-        const res = dbObj.dataValues;
+        const res = dbObj ? dbObj.dataValues : null;
         return res;
     }
 

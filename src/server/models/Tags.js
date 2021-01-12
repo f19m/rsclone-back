@@ -49,4 +49,18 @@ export default class Tags {
         });
         return data;
     }
+
+    static async getCatById(id, user) {
+        const dbObj = await models.tags.findOne({
+            where: {
+                [Op.and]: [
+                    { id },
+                    { user: user.id },
+                ],
+            },
+        });
+
+        const res = dbObj ? dbObj.dataValues : null;
+        return res;
+    }
 }
