@@ -5,6 +5,14 @@ import Err from '../../utils/err';
 const { models } = sequelize;
 
 export default class Tags {
+    static model() {
+        return models.tags;
+    }
+
+    static modelArr() {
+        return models.tags_arr;
+    }
+
     static async getAllRecords(user) {
         const data = await models.tags.findAll({ where: { user: user.id } });
         return data;

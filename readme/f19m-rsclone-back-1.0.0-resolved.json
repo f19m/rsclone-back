@@ -451,6 +451,12 @@
           },
           "400": {
             "description": "text of error"
+          },
+          "404": {
+            "description": "Tag dont finde for current user"
+          },
+          "500": {
+            "description": "Method not implemented for this types of categpries"
           }
         },
         "security": [
@@ -490,6 +496,9 @@
           },
           "400": {
             "description": "text of error"
+          },
+          "404": {
+            "description": "Move dont finde for current user"
           }
         },
         "security": [

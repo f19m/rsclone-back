@@ -8,6 +8,10 @@ const { models } = sequelize;
 const offsetSize = 10;
 
 export default class Moves {
+    static model() {
+        return models;
+    }
+
     static async getAllUserRecords(user) {
         const res = await models.moves.findAll({
             include: [{ model: models.tags_arr, as: 'tagsArr' }],

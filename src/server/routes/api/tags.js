@@ -44,4 +44,15 @@ router.post('/delete', auth.required, attachCurrentUser, (req, res) => {
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
+router.get('/getAllTags', (req, res) => {
+    Tags.model().findAll()
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
+router.get('/getAllTagsArr', (req, res) => {
+    Tags.modelArr().findAll()
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
 export default router;

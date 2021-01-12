@@ -6,6 +6,10 @@ import Moves from './Moves';
 const { models } = sequelize;
 
 export default class UserCategories {
+    static model() {
+        return models;
+    }
+
     static async createCustomRecords(user) {
         Object.keys(defData).forEach((typeCode) => {
             models.cat_type.findOne({ where: { code: typeCode } }).then((type) => {
