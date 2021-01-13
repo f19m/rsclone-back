@@ -1,9 +1,21 @@
 import sequelize from '../sequelize/index';
 
 async function addDefData() {
-    sequelize.models.cat_type.create({ name: 'Доходы', code: 'income', allowPlan: true });
-    sequelize.models.cat_type.create({ name: 'Счета', code: 'accounts', allowPlan: false });
-    sequelize.models.cat_type.create({ name: 'Расходы', code: 'expenses', allowPlan: true });
+    try {
+        await sequelize.models.cat_type.create({ name: 'Доходы', code: 'income', allowPlan: true });
+    } catch (e) {
+        console.log('row already exists');
+    }
+    try {
+        await sequelize.models.cat_type.create({ name: 'Счета', code: 'accounts', allowPlan: false });
+    } catch (e) {
+        console.log('row already exists');
+    }
+    try {
+        await sequelize.models.cat_type.create({ name: 'Расходы', code: 'expenses', allowPlan: true });
+    } catch (e) {
+        console.log('row already exists');
+    }
 }
 
 async function reset() {
@@ -11,6 +23,7 @@ async function reset() {
 
     await sequelize.sync({ force: true });
     await addDefData();
+
     console.log('Done!');
 }
 
@@ -19,6 +32,7 @@ async function create() {
 
     await sequelize.sync();
     await addDefData();
+
     console.log('Done!');
 }
 
@@ -27,8 +41,8 @@ async function sync() {
 
     await sequelize.sync({ force: false });
     await addDefData();
+
     console.log('Done!');
-    console.log(JSON.stringify(sequelize.models.users));
 }
 
 export default { reset, create, sync };

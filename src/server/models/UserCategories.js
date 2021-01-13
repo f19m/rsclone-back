@@ -6,6 +6,10 @@ import Moves from './Moves';
 const { models } = sequelize;
 
 export default class UserCategories {
+    static model() {
+        return models;
+    }
+
     static async createCustomRecords(user) {
         Object.keys(defData).forEach((typeCode) => {
             models.cat_type.findOne({ where: { code: typeCode } }).then((type) => {
@@ -28,7 +32,7 @@ export default class UserCategories {
                 ],
             },
         });
-        const res = dbObj.dataValues;
+        const res = dbObj ? dbObj.dataValues : null;
         return res;
     }
 
@@ -42,6 +46,8 @@ export default class UserCategories {
                 if (cat.type === 1 || cat.type === 3) {
                     const sumByMonth = await Moves.getSumByMonth(cat);
                     cat.summa = sumByMonth;
+                } else {
+                    cat.summa = parseFloat(cat.summa);
                 }
             }
         }

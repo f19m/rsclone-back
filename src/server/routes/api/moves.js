@@ -42,4 +42,19 @@ router.post('/create', auth.required, attachCurrentUser, (req, res) => {
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
+router.post('/delete', auth.required, attachCurrentUser, (req, res) => {
+    const moveData = req.body.move;
+    const user = req.currentUser;
+
+    Moves.delete(moveData, user)
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
+router.get('/getAllMoves', (req, res) => {
+    Moves.model().moves.findAll({ include: [{ model: Moves.model().tags_arr, as: 'tagsArr' }] })
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
 export default router;

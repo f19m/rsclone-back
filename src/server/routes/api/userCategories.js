@@ -35,4 +35,10 @@ router.post('/update', auth.required, attachCurrentUser, validate({ body: schema
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
+router.get('/getAll', (req, res) => {
+    UserCategories.model().user_cat.findAll()
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
 export default router;
