@@ -546,6 +546,90 @@
           }
         ]
       }
+    },
+    "/api/moves/getAllMoves": {
+      "get": {
+        "tags": [
+          "cheat"
+        ],
+        "summary": "Show all data from table moves",
+        "description": "Show all data from table moves",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Moves"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tags/getAllTags": {
+      "get": {
+        "tags": [
+          "cheat"
+        ],
+        "summary": "Show all data from table tags",
+        "description": "SShow all data from table tags",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tags"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tags/getAllTagsArr": {
+      "get": {
+        "tags": [
+          "cheat"
+        ],
+        "summary": "Show all data from table tags_arr",
+        "description": "SShow all data from table tags_arr",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagsArr"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "cheat"
+        ],
+        "summary": "Show all data from table users",
+        "description": "SShow all data from table users",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
