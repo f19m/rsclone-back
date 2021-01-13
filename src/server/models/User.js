@@ -64,6 +64,58 @@ class User {
     async getInfo() {
         return { name: this.name, email: this.email };
     }
+
+    static async dataGenerate(userRec) {
+        const userCat = await models.user_cat.findAll({ where: { user: userRec.id }, raw: true });
+        const catFromArr = userCat.filter((obj) => obj.type === 2);
+        const catToArr = userCat.filter((obj) => obj.type === 3);
+        const moveArr = [];
+
+        const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        const rounded = function (number) {
+            return +number.toFixed(2);
+        };
+
+        const curDate = new Date();
+        let date = curDate - 30 * 1000 * 60 * 60 * 24;
+        console.log(new Date(date));
+
+        while (new Date(date) <= (curDate - 1000 * 60 * 60 * 24)) {
+            let movesCnt = Math.floor(Math.random() * 7);
+            while (movesCnt === 0) {
+                movesCnt = Math.floor(Math.random() * 7);
+            }
+
+            const opDate = new Date(date);
+            const strOpDate = `${opDate.getFullYear()}-${opDate.getMonth() + 1}-${opDate.getDate()}`;
+
+            console.log(`strOpDate: ${strOpDate}`);
+
+            for (let index = 0; index < movesCnt; index += 1) {
+                console.log(`move ${index + 1} of ${movesCnt}`);
+
+                const catFrom = getRandomItem(catFromArr);
+                const catTo = getRandomItem(catToArr);
+                let summ = rounded(Math.random() * 5000);
+                while (summ === 0) summ = rounded(Math.random() * 5000);
+
+                const newMove = {
+                    user: userRec.id,
+                    cat_from: catFrom.id,
+                    cat_to: catTo.id,
+                    date: strOpDate,
+                    value: summ,
+                };
+                moveArr.push(models.moves.create(newMove));
+            }
+            date += 1000 * 60 * 60 * 24;
+        }
+
+        await Promise.all(moveArr);
+
+        const res = await this.getUserInfo(userRec);
+        return res;
+    }
 }
 
 export default User;

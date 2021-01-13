@@ -19,10 +19,7 @@ router.post('/login', (req, res) => {
         res.status(400).json(new Err(err.join(',')));
     } else {
         AuthService.login(req.body.email, req.body.password)
-            .then((data) => {
-                console.log('RES OK');
-                return res.status(200).json(data);
-            })
+            .then((data) => res.status(200).json(data))
             .catch((errMsg) => Err.errRet(res, errMsg));
     }
 });
@@ -47,7 +44,7 @@ router.post('/registration', (req, res) => {
     }
 });
 
-router.get('/users',  (req, res) => {
+router.get('/users', (req, res) => {
     User.getAll()
         .then((data) => res.json(data))
         .catch((errMsg) => Err.errRet(res, errMsg));
@@ -56,6 +53,13 @@ router.get('/users',  (req, res) => {
 router.post('/user/getInfo', auth.required, attachCurrentUser, (req, res) => {
     const user = req.currentUser;
     User.getUserInfo(user)
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
+router.post('/user/dataGenerate', auth.required, attachCurrentUser, (req, res) => {
+    const user = req.currentUser;
+    User.dataGenerate(user)
         .then((data) => res.json(data))
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
