@@ -46,6 +46,8 @@ export default class UserCategories {
                 if (cat.type === 1 || cat.type === 3) {
                     const sumByMonth = await Moves.getSumByMonth(cat);
                     cat.summa = sumByMonth;
+                } else {
+                    cat.summa = parseFloat(cat.summa);
                 }
             }
         }
