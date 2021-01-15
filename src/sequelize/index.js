@@ -30,6 +30,7 @@ pool.on('connect', (err, client) => {
 });
 
 const url = 'postgres://tvvdnlvsoajxhh:844034f47b986c3c875d8eeedf2ef963575410dcf63068ff5baaa2ba0defad25@ec2-99-81-238-134.eu-west-1.compute.amazonaws.com:5432/dbdtjsb572lg2e';
+// const url = 'postgres://postgres:postgres@localhost:5432/rs-clone-back-db';
 const sequelize = new Sequelize(process.env.DATABASE_URL || url, {
     dialect: 'postgres',
     dialectOptions: {

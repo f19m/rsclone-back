@@ -3,7 +3,7 @@ import db from './database/setup';
 import server from './server/index';
 import config from './server/config';
 
-db.create();
+db.sync();
 // db.reset();
 // sequelize.sync();
 

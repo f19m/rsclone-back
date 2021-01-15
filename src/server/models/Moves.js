@@ -14,7 +14,10 @@ export default class Moves {
 
     static async getAllUserRecords(user) {
         const res = await models.moves.findAll({
-            include: [{ model: models.tags_arr, as: 'tagsArr' }],
+            include: [{ model: models.tags_arr, as: 'tagsArr' },
+                { model: models.user_cat, as: 'cat_from_ref' },
+                { model: models.user_cat, as: 'cat_to_ref' },
+            ],
             order: [
                 ['date', 'DESC'],
                 ['id', 'DESC'],

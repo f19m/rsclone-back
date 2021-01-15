@@ -20,22 +20,22 @@ export default (sequelize) => {
                 key: 'id',
             },
         },
-        cat_from: {
-            allowNull: false,
-            type: DataTypes.INTEGER,
-            references: {
-                model: sequelize.models.user_cat,
-                key: 'id',
-            },
-        },
-        cat_to: {
-            allowNull: false,
-            type: DataTypes.INTEGER,
-            references: {
-                model: sequelize.models.user_cat,
-                key: 'id',
-            },
-        },
+        // cat_from: {
+        //     allowNull: false,
+        //     type: DataTypes.INTEGER,
+        //     references: {
+        //         model: sequelize.models.user_cat,
+        //         key: 'id',
+        //     },
+        // },
+        // cat_to: {
+        //     allowNull: false,
+        //     type: DataTypes.INTEGER,
+        //     references: {
+        //         model: sequelize.models.user_cat,
+        //         key: 'id',
+        //     },
+        // },
         date: {
             allowNull: false,
             type: DataTypes.DATE,

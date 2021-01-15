@@ -18,7 +18,15 @@ export default function applyExtraSetup(sequelize) {
     tags_arr.belongsTo(moves, { foreignKey: 'collection' });
 
     // users.hasMany(moves);
-    // user_cat.hasMany(moves, { as: 'cat_from', foreignKey: 'id' });
+
+    user_cat.hasMany(moves, { as: 'cat_from_ref', foreignKey: 'cat_from' });
+    user_cat.hasMany(moves, { as: 'cat_to_ref', foreignKey: 'cat_to' });
+
+    moves.belongsTo(user_cat, { as: 'cat_from_ref', foreignKey: 'cat_from' });
+    moves.belongsTo(user_cat, { as: 'cat_to_ref', foreignKey: 'cat_to' });
+
+    // moves.belongsTo(user_cat, { foreignKey: 'cat_to' });
+
     // user_cat.hasMany(moves, { as: 'cat_to', foreignKey: 'id' });
 
     // moves.belongsTo(users);
