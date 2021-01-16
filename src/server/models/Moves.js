@@ -316,8 +316,10 @@ export default class Moves {
             where cf.type = t.id
             and ((t.id = 3 and cf.id = m.cat_to) or 
             (t.id = 1 and cf.id = m.cat_from) )
-            and m.date >= TO_TIMESTAMP('${filter.dateFrom}', 'YYYY-MM-DD')
-            and m.date <= TO_TIMESTAMP('${filter.dateTo}', 'YYYY-MM-DD')
+            and (${filter.dateFrom ? `'${filter.dateFrom}'` : 'null'} is not null and m.date >= TO_TIMESTAMP('${filter.dateFrom}', 'YYYY-MM-DD')
+                or ${filter.dateFrom ? `'${filter.dateFrom}'` : 'null'} is null)
+            and(${filter.dateTo ? `'${filter.dateTo}'` : 'null'} is not null and  m.date <= TO_TIMESTAMP('${filter.dateTo}', 'YYYY-MM-DD') 
+             or ${filter.dateTo ? `'${filter.dateTo}'` : 'null'} is null)
             and t.id = ${filter.catType}
             group by t.id, date_trunc('${filter.dateTrunc}',m.date)`, {
                 type: QueryTypes.SELECT,
