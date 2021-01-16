@@ -13,7 +13,7 @@ export default function applyExtraSetup(sequelize) {
     // tags.belongsTo(users);
 
     // tags.hasMany(tags_arr);
-    moves.hasMany(tags_arr, { as: 'tagsArr', foreignKey: 'collection' });
+    moves.hasMany(tags_arr, { as: 'tags_arr', foreignKey: 'collection' });
     // tags_arr.belongsTo(tags);
     tags_arr.belongsTo(moves, { foreignKey: 'collection' });
 

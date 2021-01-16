@@ -57,4 +57,14 @@ router.get('/getAllMoves', (req, res) => {
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
+
+router.post('/update', auth.required, attachCurrentUser, (req, res) => {
+    const move = req.body.move;
+    const user = req.currentUser;
+
+    Moves.update(move, user)
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
 export default router;

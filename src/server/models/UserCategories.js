@@ -95,7 +95,5 @@ export default class UserCategories {
             },
 
         });
-        console.log('dDDDDDDDDD');
-        console.log(res);
     }
 }

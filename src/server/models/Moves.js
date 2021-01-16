@@ -14,7 +14,7 @@ export default class Moves {
 
     static async getAllUserRecords(user) {
         const res = await models.moves.findAll({
-            include: [{ model: models.tags_arr, as: 'tagsArr' },
+            include: [{ model: models.tags_arr, as: 'tags_arr' },
                 { model: models.user_cat, as: 'cat_from_ref' },
                 { model: models.user_cat, as: 'cat_to_ref' },
             ],
@@ -29,7 +29,7 @@ export default class Moves {
 
     static async getAllUserRecordsByCategory(user, cat) {
         const res = await models.moves.findAll({
-            include: [{ model: models.tags_arr, as: 'tagsArr' }],
+            include: [{ model: models.tags_arr, as: 'tags_arr' }],
             order: [
                 ['date', 'DESC'],
                 ['id', 'DESC'],
@@ -126,9 +126,9 @@ export default class Moves {
 
     static async create({ user, data }) {
         const moveObj = { ...data };
-        const tagArr = data.tag_arr;
+        const tagArr = data.tags_arr;
 
-        if (moveObj.tag_arr) delete moveObj.tag_arr;
+        if (moveObj.tags_arr) delete moveObj.tags_arr;
         moveObj.user = user.id;
         moveObj.date = Date.parse(moveObj.date);
 
@@ -229,5 +229,82 @@ export default class Moves {
         await UserCat.update(catTo, user);
 
         return { move: null, cat_from: catFrom, cat_to: catTo };
+    }
+
+    static async update(moveRec, user) {
+        const updateObj = { ...moveRec };
+        const move = await models.moves.findByPk(moveRec.id);
+
+        if (!move || move.user !== user.id) {
+            throw new Err('Move dont finde for current user', 404);
+        }
+
+        const catFrom = await UserCat.getCatById(move.cat_from, user);
+        const catTo = await UserCat.getCatById(move.cat_to, user);
+
+        await models.moves.update({
+            value: updateObj.value ? updateObj.value : move.value,
+            date: updateObj.date ? updateObj.date : move.date,
+            comment: updateObj.comment ? updateObj.comment : move.comment,
+        },
+        {
+            where: {
+                [Op.and]: [
+                    { id: updateObj.id },
+                    { user: user.id },
+                ],
+            },
+
+        });
+
+        // чистим тэги
+        await models.tags_arr.destroy({
+            where: { collection: updateObj.id },
+        });
+
+        // проверяем текущие теги
+        const tagArr = updateObj.tags_arr;
+        const tagArrCheck = [];
+        tagArr.forEach((tagItem) => {
+            tagArrCheck.push(
+                Tags.getCatById(tagItem.tag, user).then((tagData) => {
+                    if (!tagData) throw new Err('Tag dont finde for current user', 404);
+                }),
+            );
+        });
+
+        await Promise.all(tagArrCheck);
+
+        // создание массива тэгов для записи
+        const prmTagArr = [];
+        tagArr.forEach((tagItem) => {
+            const tagArrObj = {};
+            tagArrObj.collection = updateObj.id;
+            tagArrObj.tag = tagItem.tag;
+            prmTagArr.push(models.tags_arr.create(tagArrObj));
+        });
+        await Promise.all(prmTagArr);
+
+        if (catFrom.type === 2) {
+            const sum = parseFloat(catFrom.summa, 10)
+            + parseFloat(move.value, 10) - parseFloat(updateObj.value, 10);
+            catFrom.summa = sum;
+        } else {
+            catFrom.summa = await this.getSumByMonth(catFrom);
+        }
+        if (catTo.type === 2) {
+            const sum = parseFloat(catFrom.summa, 10)
+            - parseFloat(move.value, 10) + parseFloat(updateObj.value, 10);
+            catTo.summa = sum;
+        } else {
+            catTo.summa = await this.getSumByMonth(catTo);
+        }
+
+        await UserCat.update(catFrom, user);
+        await UserCat.update(catTo, user);
+        const res = await models.moves.findByPk(updateObj.id, {
+            include: [{ model: models.tags_arr, as: 'tags_arr' }],
+        });
+        return { move: res, cat_from: catFrom, cat_to: catTo };
     }
 }
