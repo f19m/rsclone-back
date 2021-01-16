@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, QueryTypes } from 'sequelize';
 import sequelize from '../../sequelize';
 import Err from '../../utils/err';
 import UserCat from './UserCategories';
@@ -51,7 +51,7 @@ export default class Moves {
 
     static async getUserRecordsWithOffset(user, offset = 0) {
         const res = await models.moves.findAll({
-            include: [{ model: models.tags_arr, as: 'tagsArr' }],
+            include: [{ model: models.tags_arr, as: 'tags_arr' }],
             order: [
                 ['date', 'DESC'],
                 ['id', 'DESC'],
@@ -134,6 +134,7 @@ export default class Moves {
 
         const catFrom = await UserCat.getCatById(moveObj.cat_from, user);
         const catTo = await UserCat.getCatById(moveObj.cat_to, user);
+        console.log(catTo);
 
         if (!((catFrom.type === 1 && catTo.type === 2)
             || (catFrom.type === 2 && catTo.type === 2)
@@ -172,16 +173,16 @@ export default class Moves {
             catFrom.summa = await this.getSumByMonth(catFrom);
         }
         if (catTo.type === 2) {
-            const sum = parseFloat(catFrom.summa, 10) + parseFloat(moveObj.value, 10);
+            const sum = parseFloat(catTo.summa, 10) + parseFloat(moveObj.value, 10);
             catTo.summa = sum;
         } else {
             catTo.summa = await this.getSumByMonth(catTo);
         }
-
+        console.log(catTo);
         await UserCat.update(catFrom, user);
         await UserCat.update(catTo, user);
         const res = await models.moves.findByPk(newMove.id, {
-            include: [{ model: models.tags_arr, as: 'tagsArr' }],
+            include: [{ model: models.tags_arr, as: 'tags_arr' }],
         });
 
         return { move: res, cat_from: catFrom, cat_to: catTo };
@@ -219,7 +220,7 @@ export default class Moves {
             catFrom.summa = await this.getSumByMonth(catFrom);
         }
         if (catTo.type === 2) {
-            const sum = parseFloat(catFrom.summa, 10) - parseFloat(delObj.value, 10);
+            const sum = parseFloat(catTo.summa, 10) - parseFloat(delObj.value, 10);
             catTo.summa = sum;
         } else {
             catTo.summa = await this.getSumByMonth(catTo);
@@ -293,7 +294,7 @@ export default class Moves {
             catFrom.summa = await this.getSumByMonth(catFrom);
         }
         if (catTo.type === 2) {
-            const sum = parseFloat(catFrom.summa, 10)
+            const sum = parseFloat(catTo.summa, 10)
             - parseFloat(move.value, 10) + parseFloat(updateObj.value, 10);
             catTo.summa = sum;
         } else {
@@ -306,5 +307,23 @@ export default class Moves {
             include: [{ model: models.tags_arr, as: 'tags_arr' }],
         });
         return { move: res, cat_from: catFrom, cat_to: catTo };
+    }
+
+    static async getDataByCatType(filter, user) {
+        const records = await sequelize.query(
+            `select t.id, date_trunc('${filter.dateTrunc}',m.date) date, sum(m.value) sum
+            from moves m, user_cats cf, cat_types t
+            where cf.type = t.id
+            and ((t.id = 3 and cf.id = m.cat_to) or 
+            (t.id = 1 and cf.id = m.cat_from) )
+            and m.date >= TO_TIMESTAMP('${filter.dateFrom}', 'YYYY-MM-DD')
+            and m.date <= TO_TIMESTAMP('${filter.dateTo}', 'YYYY-MM-DD')
+            and t.id = ${filter.catType}
+            group by t.id, date_trunc('${filter.dateTrunc}',m.date)`, {
+                type: QueryTypes.SELECT,
+            },
+        );
+
+        return records;
     }
 }

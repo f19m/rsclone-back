@@ -52,17 +52,25 @@ router.post('/delete', auth.required, attachCurrentUser, (req, res) => {
 });
 
 router.get('/getAllMoves', (req, res) => {
-    Moves.model().moves.findAll({ include: [{ model: Moves.model().tags_arr, as: 'tagsArr' }] })
+    Moves.model().moves.findAll({ include: [{ model: Moves.model().tags_arr, as: 'tags_arr' }] })
         .then((data) => res.json(data))
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-
 router.post('/update', auth.required, attachCurrentUser, (req, res) => {
-    const move = req.body.move;
+    const { move } = req.body;
     const user = req.currentUser;
 
     Moves.update(move, user)
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
+router.post('/getDataByCatType', auth.required, attachCurrentUser, (req, res) => {
+    const move = req.body.filter;
+    const user = req.currentUser;
+
+    Moves.getDataByCatType(move, user)
         .then((data) => res.json(data))
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
