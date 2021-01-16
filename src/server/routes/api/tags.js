@@ -27,20 +27,20 @@ router.post('/create', auth.required, attachCurrentUser, (req, res) => {
 });
 
 router.post('/update', auth.required, attachCurrentUser, (req, res) => {
-    const tagRec = req.body;
+    const { tag } = req.body;
     const user = req.currentUser;
 
-    Tags.update({ tag: tagRec, user })
+    Tags.update({ tag, user })
         .then((data) => res.json(data))
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
 router.post('/delete', auth.required, attachCurrentUser, (req, res) => {
-    const tag = req.body;
+    const { tag } = req.body;
     const user = req.currentUser;
 
     Tags.update({ tag, user })
-        .then((data) => res.json(data))
+        .then(() => res.redirect(307, '/api/user/getInfo'))
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 

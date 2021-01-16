@@ -84,4 +84,18 @@ export default class UserCategories {
         const newRec = models.user_cat.findByPk(insertObj.id);
         return newRec;
     }
+
+    static async delete(catRec, user) {
+        const res = await models.user_cat.destroy({
+            where: {
+                [Op.and]: [
+                    { id: catRec.id },
+                    { user: user.id },
+                ],
+            },
+
+        });
+        console.log('dDDDDDDDDD');
+        console.log(res);
+    }
 }

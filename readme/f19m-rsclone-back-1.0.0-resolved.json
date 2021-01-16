@@ -231,6 +231,48 @@
         ]
       }
     },
+    "/api/categories/delete": {
+      "post": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "This delete user categories with all moves, return userInfo",
+        "description": "This delete user categories with all moves, return userInfo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_4"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/tags/get": {
       "post": {
         "tags": [
@@ -274,7 +316,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/body_4"
+                "$ref": "#/components/schemas/body_5"
               }
             }
           },
@@ -316,7 +358,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/body_5"
+                "$ref": "#/components/schemas/body_6"
               }
             }
           },
@@ -347,6 +389,48 @@
         ]
       }
     },
+    "/api/tags/delete": {
+      "post": {
+        "tags": [
+          "tags"
+        ],
+        "summary": "This delete user tags by using token",
+        "description": "This delete user tags by using token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body_7"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "text of error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/moves/get": {
       "post": {
         "tags": [
@@ -358,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/body_6"
+                "$ref": "#/components/schemas/body_8"
               }
             }
           },
@@ -429,7 +513,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/body_7"
+                "$ref": "#/components/schemas/body_9"
               }
             }
           },
@@ -477,7 +561,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/body_8"
+                "$ref": "#/components/schemas/body_10"
               }
             }
           },
@@ -519,7 +603,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/body_9"
+                "$ref": "#/components/schemas/body_11"
               }
             }
           },
@@ -629,6 +713,32 @@
             }
           }
         }
+      }
+    },
+    "/api/user/dataGenerate": {
+      "post": {
+        "tags": [
+          "cheat"
+        ],
+        "summary": "This generate random moves for auth user",
+        "description": "This generate random moves for auth user",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -874,7 +984,25 @@
           }
         }
       },
+      "apicategoriesdelete_userCat": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "userCat ID"
+          }
+        },
+        "description": "userCat object with ID"
+      },
       "body_4": {
+        "type": "object",
+        "properties": {
+          "userCat": {
+            "$ref": "#/components/schemas/apicategoriesdelete_userCat"
+          }
+        }
+      },
+      "body_5": {
         "type": "object",
         "properties": {
           "name": {
@@ -883,12 +1011,12 @@
           }
         }
       },
-      "body_5": {
+      "apitagsupdate_tag": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "description": "id of user tag"
+            "type": "integer",
+            "description": "tag id"
           },
           "name": {
             "type": "string",
@@ -897,6 +1025,31 @@
         }
       },
       "body_6": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "$ref": "#/components/schemas/apitagsupdate_tag"
+          }
+        }
+      },
+      "apitagsdelete_tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "tag id"
+          }
+        }
+      },
+      "body_7": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "$ref": "#/components/schemas/apitagsdelete_tag"
+          }
+        }
+      },
+      "body_8": {
         "type": "object",
         "properties": {
           "offset": {
@@ -920,7 +1073,7 @@
           }
         }
       },
-      "body_7": {
+      "body_9": {
         "type": "object",
         "properties": {
           "category": {
@@ -968,7 +1121,7 @@
           }
         }
       },
-      "body_8": {
+      "body_10": {
         "type": "object",
         "properties": {
           "move": {
@@ -1011,7 +1164,7 @@
           }
         }
       },
-      "body_9": {
+      "body_11": {
         "type": "object",
         "properties": {
           "move": {

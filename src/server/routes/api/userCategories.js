@@ -35,6 +35,15 @@ router.post('/update', auth.required, attachCurrentUser, validate({ body: schema
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
+router.post('/delete', auth.required, attachCurrentUser, (req, res) => {
+    const catRec = req.body.userCat;
+    const user = req.currentUser;
+
+    UserCategories.delete(catRec, user)
+        .then(() => res.redirect(307, '/api/user/getInfo'))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
 router.get('/getAll', (req, res) => {
     UserCategories.model().user_cat.findAll()
         .then((data) => res.json(data))
