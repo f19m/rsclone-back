@@ -7,8 +7,11 @@
 		"77ad0410-cd29-6f42-0bdf-bff225c3d756",
 		"8b7bbd84-8543-97b1-1031-069acd44ca9b",
 		"d8a63368-cb78-127b-7585-29ab56d033fe",
+		"85265da5-4df0-ccc9-1093-8bd2f27a6709",
 		"3dd69718-fed6-e34e-0601-0379ba83a1e1",
 		"08a254b2-8d4d-2220-5d5e-cb166db9d15d",
+		"75fd693e-9695-29a8-f55c-f505534b682b",
+		"33452b80-f336-2730-653b-d629fe3c026d",
 		"23d8cecf-e021-49e4-63c5-03b48d739eda",
 		"1c5db161-c42b-1638-5d26-d0864b6c32a2",
 		"1e6283c0-c3f2-7610-ef67-dfc67ce56157",
@@ -165,6 +168,42 @@
 			"rawModeData": "{\r\n  \"move\": {\r\n    \"cat_from\": 1,\r\n    \"cat_to\": 3,\r\n    \"date\": \"05.01.2021\",\r\n    \"value\": 100,\r\n    \"comment\": \"test comment\",\r\n    \"tag_arr\": [\r\n      {\r\n        \"tag\": 1\r\n      },  {\r\n        \"tag\": 2\r\n      }\r\n    ]\r\n  }\r\n}"
 		},
 		{
+			"id": "33452b80-f336-2730-653b-d629fe3c026d",
+			"headers": "Content-Type: application/json\nauthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJ1c2VyMiIsImVtYWlsIjoidXNlcjJAZW1haWwuY29tIn0sImlhdCI6MTYxMDc4MTI4OCwiZXhwIjoxNjEwODAyODg4fQ.TaAB4DlMoicSjCt4KQ0kQBOROciQ3kyBKoY5OVt1hX8\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "authorization",
+					"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJ1c2VyMiIsImVtYWlsIjoidXNlcjJAZW1haWwuY29tIn0sImlhdCI6MTYxMDc4MTI4OCwiZXhwIjoxNjEwODAyODg4fQ.TaAB4DlMoicSjCt4KQ0kQBOROciQ3kyBKoY5OVt1hX8",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://127.0.0.1/api/categories/get",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1610782278080,
+			"name": "/api/categories/get",
+			"description": "",
+			"collectionId": "e8254a33-48a3-a6e4-83ec-fbab3e389822",
+			"responses": [],
+			"rawModeData": ""
+		},
+		{
 			"id": "3dd69718-fed6-e34e-0601-0379ba83a1e1",
 			"headers": "Content-Type: application/x-www-form-urlencoded\nauthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJ1c2VyMSIsImVtYWlsIjoidXNlcjFAZW1haWwuY29tIn0sImlhdCI6MTYwOTg0NDc4OCwiZXhwIjoxNjA5ODQ4Mzg4fQ.LITHKW_TJ_vNAA8b8QB14_KRkeaZsgfPp4cmA4_q96g\n",
 			"headerData": [
@@ -273,6 +312,42 @@
 			"collection_id": "e8254a33-48a3-a6e4-83ec-fbab3e389822"
 		},
 		{
+			"id": "75fd693e-9695-29a8-f55c-f505534b682b",
+			"headers": "Content-Type: application/json\nauthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJ1c2VyMiIsImVtYWlsIjoidXNlcjJAZW1haWwuY29tIn0sImlhdCI6MTYxMDc4MTI4OCwiZXhwIjoxNjEwODAyODg4fQ.TaAB4DlMoicSjCt4KQ0kQBOROciQ3kyBKoY5OVt1hX8\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "authorization",
+					"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJ1c2VyMiIsImVtYWlsIjoidXNlcjJAZW1haWwuY29tIn0sImlhdCI6MTYxMDc4MTI4OCwiZXhwIjoxNjEwODAyODg4fQ.TaAB4DlMoicSjCt4KQ0kQBOROciQ3kyBKoY5OVt1hX8",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://127.0.0.1/api/categories/delete",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1610782086736,
+			"name": "/api/categories/delete",
+			"description": "",
+			"collectionId": "e8254a33-48a3-a6e4-83ec-fbab3e389822",
+			"responses": [],
+			"rawModeData": "{\r\n  \"userCat\": {\r\n  \t\"id\": 13\r\n  \t\r\n  }\r\n}"
+		},
+		{
 			"id": "77ad0410-cd29-6f42-0bdf-bff225c3d756",
 			"headers": "Content-Type: application/x-www-form-urlencoded\n",
 			"headerData": [
@@ -361,6 +436,41 @@
 			"collectionId": "e8254a33-48a3-a6e4-83ec-fbab3e389822",
 			"responses": [],
 			"rawModeData": "{\r\n  \"id\": 6\r\n}"
+		},
+		{
+			"id": "85265da5-4df0-ccc9-1093-8bd2f27a6709",
+			"headers": "Content-Type: application/x-www-form-urlencoded\nauthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJ1c2VyMiIsImVtYWlsIjoidXNlcjJAZW1haWwuY29tIn0sImlhdCI6MTYxMDQ2Njc2MCwiZXhwIjoxNjEwNDg4MzYwfQ.z8Jy4hMNBXAFa5zEYPEUgtd7MjRLERxWhWvG2IzosDE\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "authorization",
+					"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJ1c2VyMiIsImVtYWlsIjoidXNlcjJAZW1haWwuY29tIn0sImlhdCI6MTYxMDQ2Njc2MCwiZXhwIjoxNjEwNDg4MzYwfQ.z8Jy4hMNBXAFa5zEYPEUgtd7MjRLERxWhWvG2IzosDE",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://127.0.0.1/api/user/dataGenerate",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1610741397478,
+			"name": "/api/user/dataGenerate",
+			"description": "",
+			"collectionId": "e8254a33-48a3-a6e4-83ec-fbab3e389822",
+			"responses": []
 		},
 		{
 			"id": "8b7bbd84-8543-97b1-1031-069acd44ca9b",
