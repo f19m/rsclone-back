@@ -67,10 +67,10 @@ router.post('/update', auth.required, attachCurrentUser, (req, res) => {
 });
 
 router.post('/getDataByCatType', auth.required, attachCurrentUser, (req, res) => {
-    const move = req.body.filter;
+    const { filter } = req.body;
     const user = req.currentUser;
 
-    Moves.getDataByCatType(move, user)
+    Moves.getDataByCatType(filter, user)
         .then((data) => res.json(data))
         .catch((errMsg) => Err.errRet(res, errMsg));
 });

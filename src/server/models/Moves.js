@@ -310,6 +310,7 @@ export default class Moves {
     }
 
     static async getDataByCatType(filter, user) {
+        console.log(filter);
         const records = await sequelize.query(
             `select t.id, date_trunc('${filter.dateTrunc}',m.date) date, sum(m.value) sum
             from moves m, user_cats cf, cat_types t

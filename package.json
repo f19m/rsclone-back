@@ -4,10 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node dst/server",
+    "start": "set NODE_ENV=production & node dst/server",
     "clean": "shx rm -rf dst",
-    "startDev": "npm run clean && webpack --config config/webpack.config.dev && nodemon --exec node dst/server.js",
-    "build": "npm run clean && webpack --config config/webpack.config.production.js",
+    "startDev": "set NODE_ENV=development & npm run clean && webpack --config config/webpack.config.dev && nodemon --exec node dst/server.js",
+    "build": "set NODE_ENV=production & npm run clean && webpack --config config/webpack.config.production.js",
     "setup-db": "node src/database/setup.js",
     "test": "node src/test.js",
     "watch": "webpack --config config/webpack.config.js --watch"
