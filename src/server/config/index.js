@@ -2,4 +2,6 @@ const secret = process.env.NODE_ENV === 'production' ? process.env.SECRET || 'My
 const port = process.env.PORT || 80;
 const expiration = '6h';
 const server = '';
-export default { secret, port, expiration };
+export default {
+    secret, port, expiration, server,
+};

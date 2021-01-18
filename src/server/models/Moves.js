@@ -311,18 +311,25 @@ export default class Moves {
 
     static async getDataByCatType(filter, user) {
         console.log(filter);
+        const newFilter = { ...filter };
+        if (filter.userCat !== undefined) {
+            newFilter.addUserCat = true;
+            if (filter.userCat !== 0) newFilter.userCatId = filter.userCat;
+        }
+
         const records = await sequelize.query(
-            `select t.id, date_trunc('${filter.dateTrunc}',m.date) date, sum(m.value) sum
+            `select t.id as type_id, ${newFilter.addUserCat ? 'cf.id as user_cat_id, ' : ''} date_trunc('${newFilter.dateTrunc}',m.date) date, sum(m.value) sum
             from moves m, user_cats cf, cat_types t
             where cf.type = t.id
             and ((t.id = 3 and cf.id = m.cat_to) or 
             (t.id = 1 and cf.id = m.cat_from) )
-            and (${filter.dateFrom ? `'${filter.dateFrom}'` : 'null'} is not null and m.date >= TO_TIMESTAMP('${filter.dateFrom}', 'YYYY-MM-DD')
-                or ${filter.dateFrom ? `'${filter.dateFrom}'` : 'null'} is null)
-            and(${filter.dateTo ? `'${filter.dateTo}'` : 'null'} is not null and  m.date <= TO_TIMESTAMP('${filter.dateTo}', 'YYYY-MM-DD') 
-             or ${filter.dateTo ? `'${filter.dateTo}'` : 'null'} is null)
-            and t.id = ${filter.catType}
-            group by t.id, date_trunc('${filter.dateTrunc}',m.date)`, {
+            and (${newFilter.dateFrom ? `'${newFilter.dateFrom}'` : 'null'} is not null and m.date >= TO_TIMESTAMP('${newFilter.dateFrom}', 'YYYY-MM-DD')
+                or ${newFilter.dateFrom ? `'${newFilter.dateFrom}'` : 'null'} is null)
+            and(${newFilter.dateTo ? `'${newFilter.dateTo}'` : 'null'} is not null and  m.date <= TO_TIMESTAMP('${newFilter.dateTo}', 'YYYY-MM-DD') 
+             or ${newFilter.dateTo ? `'${filter.dateTo}'` : 'null'} is null)
+            and t.id in (${newFilter.catType.join(',')})
+            group by t.id, ${newFilter.addUserCat ? 'cf.id, ' : ''} date_trunc('${newFilter.dateTrunc}',m.date)
+            order by date_trunc('${newFilter.dateTrunc}',m.date)`, {
                 type: QueryTypes.SELECT,
             },
         );
