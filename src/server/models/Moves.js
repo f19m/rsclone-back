@@ -126,7 +126,7 @@ export default class Moves {
 
     static async create({ user, data }) {
         const moveObj = { ...data };
-        const tagArr = data.tags_arr;
+        const tagArr = data.tags_arr ? data.tags_arr : [];
 
         if (moveObj.tags_arr) delete moveObj.tags_arr;
         moveObj.user = user.id;
@@ -264,7 +264,7 @@ export default class Moves {
         });
 
         // проверяем текущие теги
-        const tagArr = updateObj.tags_arr;
+        const tagArr = updateObj.tags_arr ? updateObj.tags_arr : [];
         const tagArrCheck = [];
         tagArr.forEach((tagItem) => {
             tagArrCheck.push(
