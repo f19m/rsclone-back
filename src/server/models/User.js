@@ -39,6 +39,7 @@ class User {
         const userCatType = await UserCategories.getAllUserRecords(user);
         const movesArr = await Moves.getUserRecordsWithOffset(user);
         const tagsArr = await Tags.getAllRecords(user);
+        const movesArrByDay = await Moves.getUserRecordsGroupByDay(user);
 
         return {
             categories: catTypes,
@@ -47,6 +48,7 @@ class User {
                 name: user.name,
                 userCategories: userCatType,
                 moves: movesArr,
+                allMoves: movesArrByDay,
                 tags: tagsArr,
             },
         };

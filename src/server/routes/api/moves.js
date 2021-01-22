@@ -75,4 +75,9 @@ router.post('/getDataByCatType', auth.required, attachCurrentUser, (req, res) =>
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
+router.post('/getAllByDate', auth.required, attachCurrentUser, (req, res) => {
+    Moves.getUserRecordsGroupByDay(req.currentUser)
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
 export default router;

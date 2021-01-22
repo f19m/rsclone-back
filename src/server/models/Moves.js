@@ -1,4 +1,5 @@
 import { Op, QueryTypes } from 'sequelize';
+import dateFormat from 'dateformat';
 import sequelize from '../../sequelize';
 import Err from '../../utils/err';
 import UserCat from './UserCategories';
@@ -59,12 +60,6 @@ export default class Moves {
             where: {
                 [Op.and]: [
                     { user: user.id },
-                    // {
-                    //     date: {
-                    //         [Op.gte]: new Date(`${(new Date()).getFullYear()}/${(new Date()).getMonth() + 1}/01`),
-                    //     },
-                    // },
-
                 ],
             },
             limit: offsetSize,
@@ -74,6 +69,34 @@ export default class Moves {
         newOffset = res.length < offsetSize ? newOffset : newOffset + 1;
 
         return { data: res, offset: newOffset };
+    }
+
+    static async getUserRecordsGroupByDay(user) {
+        const data = await models.moves.findAll({
+            include: [{ model: models.tags_arr, as: 'tags_arr' },
+                { model: models.user_cat, as: 'cat_from_ref' },
+                { model: models.user_cat, as: 'cat_to_ref' }],
+            order: [
+                ['date', 'DESC'],
+                ['id', 'DESC'],
+            ],
+            where: {
+                user: user.id,
+            },
+            //  raw: true,
+        });
+        const res = data.map((modelItem) => modelItem.dataValues)
+            .reduce((prev, cur) => {
+                const date = dateFormat(cur.date, 'yyyy-mm-dd');
+                // eslint-disable-next-line no-param-reassign
+                if (!prev[date]) prev[date] = [];
+                prev[date].push(cur);
+                return prev;
+            }, {});
+
+        console.log(res);
+
+        return res;
     }
 
     static async getSumByMonth(userCatRec) {
