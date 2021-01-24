@@ -2,3 +2,4 @@ node_modules
 dst
 docs
 db.sqlite
+package-lock.json
