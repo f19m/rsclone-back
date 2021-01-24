@@ -18,7 +18,7 @@ export default async (req, res, next) => {
     delete req.currentUser.password;
 
     if (!userRecord) {
-        return res.status(401).end('User not found');
+        return res.status(404).end('User not found');
     }
     return next();
 };

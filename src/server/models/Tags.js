@@ -26,7 +26,7 @@ export default class Tags {
             if (e.original.errno === 19) {
                 throw new Err('Duplicate value', 409);
             }
-            console.log(e);
+            //console.log(e);
             throw new Error(e);
         }
     }

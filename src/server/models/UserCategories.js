@@ -37,7 +37,7 @@ export default class UserCategories {
     }
 
     static async getAllUserRecords(user) {
-        //  console.log('UserCategories.getAllUserRecords');
+        //  //console.log('UserCategories.getAllUserRecords');
         const res = await models.user_cat.findAll({ where: { user: user.id } });
 
         async function processArray(array) {

@@ -21,6 +21,10 @@ app.use(bodyParser.json());
 // app.use(routes);
 app.use(router);
 
+app.use('/', (req, res, next) => {
+    res.redirect('/api-docs');
+});
+
 // catch 404
 app.use((req, res, next) => {
     const err = new Error('Not Found');
@@ -30,7 +34,7 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-    console.log(err.stack);
+    // console.log(err.stack);
 
     if (err instanceof mid.ValidationError) {
         // At this point you can execute your error handling code

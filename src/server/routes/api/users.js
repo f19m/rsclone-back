@@ -36,7 +36,7 @@ router.post('/registration', (req, res) => {
         err.push('No name specified');
     }
     if (err.length) {
-        res.status(400).json(new Err(err.join(',')));
+        res.status(400).json(new Err(err.join(', ')));
     } else {
         AuthService.signUp(req.body.email, req.body.password, req.body.name)
             .then((data) => res.status(200).json(data))
