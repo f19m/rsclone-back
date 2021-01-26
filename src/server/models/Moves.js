@@ -344,6 +344,8 @@ export default class Moves {
             `select t.id as type_id, ${newFilter.addUserCat ? 'cf.id as user_cat_id, ' : ''} date_trunc('${newFilter.dateTrunc}',m.date) date, sum(m.value) sum
             from moves m, user_cats cf, cat_types t
             where cf.type = t.id
+            and m.user = ${user.id}
+            and cf.user = ${user.id}
             and ((t.id = 3 and cf.id = m.cat_to) or 
             (t.id = 1 and cf.id = m.cat_from) )
             and (${newFilter.dateFrom ? `'${newFilter.dateFrom}'` : 'null'} is not null and m.date >= TO_TIMESTAMP('${newFilter.dateFrom}', 'YYYY-MM-DD')
