@@ -94,7 +94,7 @@ export default class Moves {
                 return prev;
             }, {});
 
-        console.log(res);
+        //console.log(res);
 
         return res;
     }
@@ -157,7 +157,7 @@ export default class Moves {
 
         const catFrom = await UserCat.getCatById(moveObj.cat_from, user);
         const catTo = await UserCat.getCatById(moveObj.cat_to, user);
-        console.log(catTo);
+        //console.log(catTo);
 
         if (!((catFrom.type === 1 && catTo.type === 2)
             || (catFrom.type === 2 && catTo.type === 2)
@@ -201,7 +201,7 @@ export default class Moves {
         } else {
             catTo.summa = await this.getSumByMonth(catTo);
         }
-        console.log(catTo);
+        //console.log(catTo);
         await UserCat.update(catFrom, user);
         await UserCat.update(catTo, user);
         const res = await models.moves.findByPk(newMove.id, {
@@ -333,7 +333,7 @@ export default class Moves {
     }
 
     static async getDataByCatType(filter, user) {
-        console.log(filter);
+        //console.log(filter);
         const newFilter = { ...filter };
         if (filter.userCat !== undefined) {
             newFilter.addUserCat = true;

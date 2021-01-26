@@ -26,10 +26,9 @@ router.post('/create', auth.required, attachCurrentUser, validate({ body: schema
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/update', auth.required, attachCurrentUser, validate({ body: schema.categories.update }), (req, res) => {
+router.post('/update', auth.required, attachCurrentUser, (req, res) => {
     const catRec = req.body;
     const user = req.currentUser;
-
     UserCategories.update(catRec, user)
         .then((data) => res.json(data))
         .catch((errMsg) => Err.errRet(res, errMsg));

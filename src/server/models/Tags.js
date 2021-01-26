@@ -26,12 +26,12 @@ export default class Tags {
             if (e.original.errno === 19) {
                 throw new Err('Duplicate value', 409);
             }
-            console.log(e);
+            // console.log(e);
             throw new Error(e);
         }
     }
 
-    static async edit({ user, tag }) {
+    static async update({ user, tag }) {
         const data = await models.tags.update({ name: tag.name },
             {
                 where: {
@@ -42,7 +42,8 @@ export default class Tags {
                 },
 
             });
-        return data;
+        const res = await this.getCatById(tag.id, user);
+        return res;
     }
 
     static async delete({ user, tag }) {
@@ -55,7 +56,7 @@ export default class Tags {
             },
 
         });
-        return data;
+        return {};
     }
 
     static async getCatById(id, user) {

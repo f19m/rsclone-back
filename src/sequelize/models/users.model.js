@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 export default (sequelize) => {
-    console.log('define users');
+    //console.log('define users');
     const users = sequelize.define('users', {
     // The following specification of the 'id' attribute could be omitted
     // since it is the default.
@@ -28,7 +28,7 @@ export default (sequelize) => {
         },
     });
 
-    console.log('define finish');
-    console.log(JSON.stringify(users));
-    console.log('------------------------');
+    //console.log('define finish');
+    //console.log(JSON.stringify(users));
+    //console.log('------------------------');
 };

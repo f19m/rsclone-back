@@ -9,7 +9,7 @@
     "startDev": "npm run clean && webpack --config config/webpack.config.dev && nodemon --exec node dst/server.js",
     "build": "npm run clean && webpack --config config/webpack.config.production.js",
     "setup-db": "node src/database/setup.js",
-    "test": "node src/test.js",
+    "test": "jest  --forceExit",
     "watch": "webpack --config config/webpack.config.js --watch"
   },
   "keywords": [],
@@ -41,12 +41,17 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^7.16.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "jest": "^26.6.3",
     "jsdoc": "^3.6.6",
     "nodemon": "^2.0.6",
+    "superagent": "^6.1.0",
+    "supertest": "^6.1.1",
     "webpack-build-log-plugin": "^1.0.6",
     "webpack-node-externals": "^2.5.2"
   }

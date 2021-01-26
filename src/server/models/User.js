@@ -29,7 +29,7 @@ class User {
             if (!res) return null;
             return res.dataValues;
         } catch (e) {
-            console.log('!Error');
+            //console.log('!Error');
             throw new Error(e.message);
         }
     }
@@ -80,7 +80,7 @@ class User {
 
         const curDate = new Date();
         let date = curDate - 30 * 1000 * 60 * 60 * 24;
-        console.log(new Date(date));
+        //console.log(new Date(date));
 
         while (new Date(date) <= (curDate - 1000 * 60 * 60 * 24)) {
             let movesCnt = Math.floor(Math.random() * 7);
@@ -91,10 +91,10 @@ class User {
             const opDate = new Date(date);
             const strOpDate = `${opDate.getFullYear()}-${opDate.getMonth() + 1}-${opDate.getDate()}`;
 
-            console.log(`strOpDate: ${strOpDate}`);
+            //console.log(`strOpDate: ${strOpDate}`);
 
             for (let index = 0; index < movesCnt; index += 1) {
-                console.log(`move ${index + 1} of ${movesCnt}`);
+                //console.log(`move ${index + 1} of ${movesCnt}`);
 
                 const catFrom = getRandomItem(catFromArr);
                 const catTo = getRandomItem(catToArr);
