@@ -12,7 +12,7 @@ const {
 router.use('/moves', router);
 
 router.post('/get', auth.required, attachCurrentUser, (req, res) => {
-    const offset = req.currentUser.body.offset || 0;
+    const offset = req.currentUser.body ? req.currentUser.body.offset || 0 : 0;
 
     Moves.getUserRecordsWithOffset(req.currentUser, offset)
         .then((data) => res.json(data))

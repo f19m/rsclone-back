@@ -39,7 +39,7 @@ router.post('/delete', auth.required, attachCurrentUser, (req, res) => {
     const { tag } = req.body;
     const user = req.currentUser;
 
-    Tags.update({ tag, user })
+    Tags.delete({ tag, user })
         .then(() => res.redirect(307, '/api/user/getInfo'))
         .catch((errMsg) => Err.errRet(res, errMsg));
 });
