@@ -269,7 +269,7 @@ export default class Moves {
         await models.moves.update({
             value: updateObj.value ? updateObj.value : move.value,
             date: updateObj.date ? updateObj.date : move.date,
-            comment: updateObj.comment ? updateObj.comment : move.comment,
+            comment: (updateObj.comment !== undefined) ? updateObj.comment : move.comment,
         },
         {
             where: {
