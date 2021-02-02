@@ -17,6 +17,7 @@ module.exports = {
   },
 
   rules: {
+    'linebreak-style': ['error', 'windows'],
     indent: ["error", 4],
     quotes: [
       'warn',
@@ -25,6 +26,6 @@ module.exports = {
         allowTemplateLiterals: true,
       },
     ],
-    'linebreak-style': ['error', 'windows'],
+     
   },
 };

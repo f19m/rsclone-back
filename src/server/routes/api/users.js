@@ -6,7 +6,7 @@ import Err from '../../../utils/err';
 const router = express.Router();
 const { AuthService, auth, attachCurrentUser } = mid;
 
-router.post('/login', (req, res, next) => {
+router.post('/login', (req, res) => {
     const err = [];
     if (!req.body.email) {
         err.push('No email specified');
@@ -19,23 +19,13 @@ router.post('/login', (req, res, next) => {
         res.status(400).json(new Err(err.join(',')));
     } else {
         AuthService.login(req.body.email, req.body.password)
-            .then((data) => {
-                console.log('RES OK');
-                return res.status(200).json(data);
-            })
-            .catch((errMsg) => {
-                if (errMsg instanceof Err && errMsg.code) {
-                    res.status(errMsg.code).json(new Err(errMsg.error));
-                } else {
-                    res.status(400).json(new Err(errMsg.message));
-                }
-            });
+            .then((data) => res.status(200).json(data))
+            .catch((errMsg) => Err.errRet(res, errMsg));
     }
 });
 
-router.post('/registration', (req, res, next) => {
+router.post('/registration', (req, res) => {
     const err = [];
-    console.log('>>>>>>>>>>>>>>>>  req.body');
     if (!req.body.password) {
         err.push('No password specified');
     }
@@ -46,29 +36,32 @@ router.post('/registration', (req, res, next) => {
         err.push('No name specified');
     }
     if (err.length) {
-        res.status(400).json(new Err(err.join(',')));
+        res.status(400).json(new Err(err.join(', ')));
     } else {
-        console.log(req.body);
         AuthService.signUp(req.body.email, req.body.password, req.body.name)
-            .then((data) => {
-                console.log('RES OK');
-                return res.status(200).json(data);
-            })
-            .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+            .then((data) => res.status(200).json(data))
+            .catch((errMsg) => Err.errRet(res, errMsg));
     }
 });
 
-router.post('/users', auth.required, attachCurrentUser, (req, res, next) => {
+router.get('/users', (req, res) => {
     User.getAll()
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
-router.post('/user/getInfo', auth.required, attachCurrentUser, (req, res, next) => {
+router.post('/user/getInfo', auth.required, attachCurrentUser, (req, res) => {
     const user = req.currentUser;
     User.getUserInfo(user)
         .then((data) => res.json(data))
-        .catch((errMsg) => res.status(400).json(new Err(errMsg.message)));
+        .catch((errMsg) => Err.errRet(res, errMsg));
+});
+
+router.post('/user/dataGenerate', auth.required, attachCurrentUser, (req, res) => {
+    const user = req.currentUser;
+    User.dataGenerate(user)
+        .then((data) => res.json(data))
+        .catch((errMsg) => Err.errRet(res, errMsg));
 });
 
 export default router;

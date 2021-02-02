@@ -5,7 +5,7 @@ export default {
         type: null,
         plan: null,
         summa: 0,
-        icoUrl: 'income',
+        icoUrl: 'savings',
     }],
     accounts: [{
         name: 'Кошелек',
@@ -13,14 +13,14 @@ export default {
         type: null,
         plan: null,
         summa: 0,
-        icoUrl: 'cash',
+        icoUrl: 'account_balance_wallet',
     }, {
         name: 'Банковский счет',
         user: null,
         type: null,
         plan: null,
         summa: 0,
-        icoUrl: 'bank',
+        icoUrl: 'account_balance',
     }],
     expenses: [
         {
@@ -29,7 +29,7 @@ export default {
             type: null,
             plan: null,
             summa: 0,
-            icoUrl: 'products',
+            icoUrl: 'local_grocery_store',
         },
         {
             name: 'Еда вне дома',
@@ -37,7 +37,7 @@ export default {
             type: null,
             plan: null,
             summa: 0,
-            icoUrl: 'fast_food',
+            icoUrl: 'restaurant',
         },
         {
             name: 'Транспорт',
@@ -45,7 +45,7 @@ export default {
             type: null,
             plan: null,
             summa: 0,
-            icoUrl: 'transport',
+            icoUrl: 'subway',
         },
         {
             name: 'Покупки',
@@ -53,7 +53,7 @@ export default {
             type: null,
             plan: null,
             summa: 0,
-            icoUrl: 'bag',
+            icoUrl: 'add_shopping_cart',
         },
         {
             name: 'Дом',
@@ -69,7 +69,7 @@ export default {
             type: null,
             plan: null,
             summa: 0,
-            icoUrl: 'film',
+            icoUrl: 'audiotrack',
         },
         {
             name: 'Услуги',
@@ -77,7 +77,7 @@ export default {
             type: null,
             plan: null,
             summa: 0,
-            icoUrl: 'services',
+            icoUrl: 'cleaning_services',
         },
     ],
 };
