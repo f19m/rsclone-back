@@ -1,5 +1,11 @@
 # rsclone-back
 
+## stack
+backend: express cors body-parser express-jwt express-json-validator-middleware jsonwebtoken argon2 
+utils: dateformat
+db: sequelize pg 
+documentation: swagger-ui-express
+
 ## depoy
 1. clone repositories
 2. cd to project folder 
