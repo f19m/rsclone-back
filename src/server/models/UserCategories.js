@@ -38,7 +38,12 @@ export default class UserCategories {
 
     static async getAllUserRecords(user) {
         //  //console.log('UserCategories.getAllUserRecords');
-        const res = await models.user_cat.findAll({ where: { user: user.id } });
+        const res = await models.user_cat.findAll({
+            where: { user: user.id },
+            order: [
+                ['id', 'asc'],
+            ],
+        });
 
         async function processArray(array) {
             // eslint-disable-next-line no-restricted-syntax
