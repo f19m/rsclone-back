@@ -64,7 +64,7 @@ describe('Test Registration req without name and email', () => {
 describe('Test Success login', () => {
     test('It should return userInfo and token', async () => {
         const userResp = await request(app)
-            .post('/api/login')
+            .post('/api/registration')
             .set('Content-type', 'application/json')
             .send(JSON.stringify({
                 name: 'user2',
