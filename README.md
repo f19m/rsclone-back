@@ -13,7 +13,7 @@
 4. npm startDev
 5. for test run: npm run test
 
-
+## links
 1. [DB SCHEMA](https://dbdiagram.io/d/5feb4f5d9a6c525a03bc9ce2)
 2. API: [V1](https://app.swaggerhub.com/apis/f19m/rsclone-back/1.0.0) or [v2](https://f19m-rsclone-back.herokuapp.com/api-docs/)
 3. [Video](https://youtu.be/IQVtRymRZqE)
