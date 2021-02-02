@@ -1,10 +1,10 @@
 # rsclone-back
 
 ## stack
-backend: express cors body-parser express-jwt express-json-validator-middleware jsonwebtoken argon2 
-utils: dateformat
-db: sequelize pg 
-documentation: swagger-ui-express
+1. backend: express cors body-parser express-jwt express-json-validator-middleware jsonwebtoken argon2 
+2. utils: dateformat
+3. db: sequelize pg 
+4. documentation: swagger-ui-express
 
 ## depoy
 1. clone repositories
@@ -14,6 +14,7 @@ documentation: swagger-ui-express
 5. for test run: npm run test
 
 
-DB SCHEMA: https://dbdiagram.io/d/5feb4f5d9a6c525a03bc9ce2
-API: https://app.swaggerhub.com/apis/f19m/rsclone-back/1.0.0 or local: http://127.0.0.1/api-docs
-
+1. [DB SCHEMA](https://dbdiagram.io/d/5feb4f5d9a6c525a03bc9ce2)
+2. API: [V1](https://app.swaggerhub.com/apis/f19m/rsclone-back/1.0.0) or [v2](https://f19m-rsclone-back.herokuapp.com/api-docs/)
+3. [Video](https://youtu.be/IQVtRymRZqE)
+4. [Medium](https://leomelik.medium.com/clonewars-coinkeeper-5230c3fc540b) 
